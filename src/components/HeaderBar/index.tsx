@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Box from '../Box';
 import Logo from '../Logo';
 
-const Aside = styled.aside`
+const Header = styled.header`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -16,13 +16,14 @@ const Aside = styled.aside`
 
     p {
       margin-top: 1rem;
-      font-size: 2.4rem;
+      font-size: 2rem;
     }
   }
 
   .theme-box {
-    div {
+    .theme-palette {
       display: flex;
+      justify-content: center;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
@@ -40,7 +41,7 @@ const ThemeColorInputWrapper = styled.div<{ selectedColor: string }>`
   width: 3rem;
   height: 3rem;
 
-  border: 2px solid white;
+  border: 2px ridge white;
   
   input {
     width: 100%;
@@ -61,7 +62,7 @@ function ThemeColorInput(props: ThemeColorInputProps) {
   );
 }
 
-export default function SideBar({ theme, updateColor }: any) {
+export default function HeaderBar({ theme, updateColor }: any) {
   const [inputColors, setInputColors] = useState(theme.colors);
 
   function handleColorChange(color: string, value: string) {
@@ -77,14 +78,14 @@ export default function SideBar({ theme, updateColor }: any) {
   }, [inputColors]);
 
   return (
-    <Aside>
+    <Header>
       <Box className="logo-box">
         <Logo />
         <p>Gustavo Willemann</p>
       </Box>
       <Box className="theme-box">
         <p>Tema</p>
-        <div>
+        <div className="theme-palette">
           <ThemeColorInput
             name="background"
             type="color"
@@ -120,6 +121,6 @@ export default function SideBar({ theme, updateColor }: any) {
       <Box>
         Nav
       </Box>
-    </Aside>
+    </Header>
   );
 }

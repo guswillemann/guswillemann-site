@@ -2,7 +2,7 @@ import { AppPropsType } from "next/dist/next-server/lib/utils";
 import { useState } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Box from '../src/components/Box';
-import SideBar from "../src/components/SideBar";
+import HeaderBar from "../src/components/HeaderBar";
 
 const initialTheme = {
   borderRadius: '8px',
@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle<{ bodyBgColor: string }>`
 
   #__next {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 4fr;
 
     gap: 1.5rem;
     max-width: 1200px;
@@ -71,7 +71,7 @@ export default function App({ Component, pageProps }: AppPropsType) {
     <>
       <GlobalStyle bodyBgColor={theme.colors.background} />
       <ThemeProvider theme={theme}>
-        <SideBar updateColor={updateColor} theme={theme} />
+        <HeaderBar updateColor={updateColor} theme={theme} />
         <MainBox>
           <Component {...pageProps} />
         </MainBox>
