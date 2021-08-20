@@ -2,33 +2,63 @@ import { GetServerSideProps } from 'next';
 import styled from 'styled-components';
 import cms from '../../src/services/cms';
 
-const ProjectPageWrapper = styled.div`
+const ProjectScreenWrapper = styled.div`
   h1 {
     margin-bottom: 2rem;
   }
 
+  h2 {
+    margin-bottom: 1.5rem;
+    margin-left: 3rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
   img {
-    border: 4px solid ${({ theme }) => theme.colors.primaryMain};
+    width: 90%;
+    margin: 2rem auto;
     border-radius: ${({ theme }) => theme.borderRadius};
   }
 
-  .project-description {
-    margin-top: 2rem;
+  iframe {
+    display: block;
+    margin: 2rem auto;
+    border-radius: ${({ theme }) => theme.borderRadius};
 
-    p:not(:last-child) {
-      margin-bottom: 0.5rem;
+  }
+
+  a {
+    color: ${({ theme }) => theme.colors.primaryDetails};
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(0.75);
     }
   }
 `;
 
-export default function ProjectPage({ project }: any) {
+type ProjectScreenProps = {
+  project: {
+    title: string;
+    summary: string;
+    description: string;
+    thumbnail: {
+      url: string;
+    }
+  }
+}
+
+export default function ProjectScreen({ project }: ProjectScreenProps) {
   return (
-    <ProjectPageWrapper>
+    <ProjectScreenWrapper>
       <h1>{project.title}</h1>
-      <a href="/projetos">ASDASD</a>
+      <div dangerouslySetInnerHTML={{ __html: project.summary }} />
       <img src={project.thumbnail.url} alt="Imagem do projeto" />
-      <div className="project-description" dangerouslySetInnerHTML={{ __html: project.description }} />
-    </ProjectPageWrapper>
+      <div dangerouslySetInnerHTML={{ __html: project.description }} />
+    </ProjectScreenWrapper>
   );
 }
 
@@ -44,6 +74,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         url
       }
       description
+      summary
     }
   }`);
 
