@@ -22,6 +22,8 @@ const ProjectCard = styled.div`
   }
   
   .project-info {
+    transition: 300ms ease-in-out;
+
     position: absolute;
     
     top: 10%;
@@ -40,8 +42,16 @@ const ProjectCard = styled.div`
     background-color: ${({ theme }) => theme.colors.background};
     
     overflow: hidden;
+
+    h2 {
+      margin-bottom: 0;
+      transition-delay: 150ms;
+      transition-property: margin-bottom;
+    }
  
     a {
+      transition: 300ms ease-in-out;
+
       position: absolute;
       top: ${paddingWidth}px;
       right: ${paddingWidth}px;
@@ -106,9 +116,12 @@ const ProjectCard = styled.div`
     }
 
     .project-description-container {
+      transition: 150ms ease-out;
+
       width: 100%;
       opacity: 1;
-      transition-delay: 250ms;
+      transition-delay: 300ms;
+      transition-property: opacity;
       overflow-y: auto;
     }
   }
