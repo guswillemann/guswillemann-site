@@ -73,7 +73,7 @@ const ProjectCard = styled.div`
     }
   }
   
-  .project-description-container {
+  .project-summary-container {
     position: relative;
     flex: 1;
     width: 0;
@@ -83,7 +83,7 @@ const ProjectCard = styled.div`
     overflow: hidden;
   }
 
-  .project-description {
+  .project-summary {
     position: absolute;
     inset: 0;
 
@@ -115,7 +115,7 @@ const ProjectCard = styled.div`
       }
     }
 
-    .project-description-container {
+    .project-summary-container {
       transition: 150ms ease-out;
 
       width: 100%;
@@ -127,19 +127,31 @@ const ProjectCard = styled.div`
   }
 `;
 
-export default function Projects({ projects }: any) {
+type ProjectsListScreenProps = {
+  projects: Array<{
+    id: string;
+    title: string;
+    slug: string;
+    summary: string;
+    thumbnail: {
+      url: string;
+    }
+  }>
+}
+
+export default function Projects({ projects }: ProjectsListScreenProps) {
   return (
     <>
       <h1 style={{ marginBottom: '2rem' }}>Projetos</h1>
       <ProjectsList>
-        {projects.map((project: any) => (
+        {projects.map((project) => (
           <ProjectCard key={project.id}>
             <img className="project-thumbnail" src={project.thumbnail.url} />
             <div className="project-info">
               <h2 className="project-title">{project.title}</h2>
               <a href={`/projetos/${project.slug}`}>mais detalhes</a>
-              <div className="project-description-container">
-                <div className="project-description" dangerouslySetInnerHTML={{ __html: project.description }} />
+              <div className="project-summary-container">
+                <div className="project-summary" dangerouslySetInnerHTML={{ __html: project.summary }} />
               </div>
             </div>
           </ProjectCard>
@@ -157,7 +169,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       thumbnail {
         url
       }
-      description
+      summary
       slug
     }
   }`);
