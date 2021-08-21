@@ -119,7 +119,7 @@ export default function HeaderBar({ theme, updateColor }: any) {
         </div>
       </Box>
       <Box>
-        Nav
+        <a href="/projetos/">Projetos</a>
       </Box>
     </Header>
   );
