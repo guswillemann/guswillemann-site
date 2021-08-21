@@ -1,4 +1,4 @@
-import { AppPropsType } from "next/dist/next-server/lib/utils";
+import { AppProps } from 'next/app';
 import { useState } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Box from '../src/components/Box';
@@ -84,7 +84,7 @@ const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
   scrollbar-width: thin;
 `;
 
-export default function App({ Component, pageProps }: AppPropsType) {
+export default function App({ Component, pageProps }: AppProps) {
   const [ theme, setTheme ] = useState(initialTheme as any);
 
   function updateColor(inputColors: Record<string, string>) {
