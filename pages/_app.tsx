@@ -57,7 +57,31 @@ const GlobalStyle = createGlobalStyle<{ bodyBgColor: string }>`
 `;
 
 const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
-  overflow: hidden auto;
+  overflow-y: scroll;
+
+  /* scrollbar: Chrome, Edge, Safari and Opera */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors.box};
+    border-radius: 8px;
+    margin: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: ${({ theme }) => theme.colors.primaryDetails};
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.colors.primaryMain};
+  }
+
+  /* scrollbar Firefox */
+  scrollbar-color: ${({ theme }) => `${theme.colors.primaryMain} ${theme.colors.box}`};
+  scrollbar-width: thin;
 `;
 
 export default function App({ Component, pageProps }: AppPropsType) {
