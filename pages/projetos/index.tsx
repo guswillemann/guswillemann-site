@@ -1,16 +1,16 @@
 import { GetServerSideProps } from 'next';
-import ProjectsScreen, { ProjectsListScreenProps } from '../../src/screens/projetos';
+import { parseCookies } from 'nookies';
+import ProjectsScreen, { ProjectsListScreenProps, PROJECT_CARD_COOKIE } from '../../src/screens/projetos';
 import cms from '../../src/services/cms';
 
-type ProjectPageProps = {
-  projects: ProjectsListScreenProps['projects'];
+type ProjectPageProps = ProjectsListScreenProps;
+
+export default function ProjectPage({ projects, projectCardCookie }: ProjectPageProps) {
+  return <ProjectsScreen projects={projects} projectCardCookie={projectCardCookie} />
 }
 
-export default function ProjectPage({ projects }: ProjectPageProps) {
-  return <ProjectsScreen projects={projects} />
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const projectCardCookie = parseCookies(ctx)[PROJECT_CARD_COOKIE];
   const cmsResponse = await cms.gql.query(`{
     allProjects (orderBy: _firstPublishedAt_DESC) {
       id
@@ -25,6 +25,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
+      projectCardCookie,
       projects: cmsResponse.data.allProjects,
     },
   };

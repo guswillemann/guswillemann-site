@@ -1,7 +1,9 @@
+import { setCookie } from 'nookies';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
-import MovingCard from '../../icons/MovingCard';
+import AnimatedProjectCard from '../../icons/AnimatedProjectCard';
+import StaticProjectCard from '../../icons/StaticProjectCard';
 import { projectCardStyleMap, ProjectCardVariants } from './projectCardStyleMap';
 
 const ProjectsList = styled.div`
@@ -22,35 +24,63 @@ export type ProjectsListScreenProps = {
     summary: string;
     thumbnail: {
       url: string;
-    }
-  }>
+    };
+  }>;
+  projectCardCookie: string;
 }
 
 const PageHeader = styled.div`
   display: flex;
   justify-content: space-between;
+
+  & > div {
+    display: flex;
+    align-items: center;
+
+    & > span {
+      margin-right: 1rem;
+    }
+  }
 `;
 
-export default function ProjectsScreen({ projects }: ProjectsListScreenProps) {
-  const [currentVariant, setCurrentVariant] = useState<ProjectCardVariants>('default');
+export const PROJECT_CARD_COOKIE = 'PROJECT_CARD_COOKIE'
+
+export default function ProjectsScreen({ projects, projectCardCookie }: ProjectsListScreenProps) {
+  const [currentVariant, setCurrentVariant] =
+    useState(projectCardCookie as ProjectCardVariants || 'default');
+
   const animationIsActive = currentVariant !== 'animationLess';
 
-  function toggleAnimation() {
-    setCurrentVariant(old => old === 'default' ? 'animationLess' : 'default');
+  function selectCardVariant(variant: ProjectCardVariants) {
+    setCookie(null, PROJECT_CARD_COOKIE, variant, {
+      path: '/projetos',
+    });
+    setCurrentVariant(variant)
   }
 
   return (
     <>
       <PageHeader>
         <h1 style={{ marginBottom: '2rem' }}>Projetos</h1>
-        <Button
-          variant="iconButton"
-          onClick={toggleAnimation}
-          toggleable={{ isActive: animationIsActive }}
-          title={animationIsActive ? 'Desativar animações' : 'Ativar animações'}
-        >
-          <MovingCard />
-        </Button>
+        <div>
+          <span>Estilo do card:</span>
+          <Button
+            variant="iconButton"
+            onClick={() => selectCardVariant('default')}
+            toggleable={{ isActive: animationIsActive, oneWay: true }}
+            title="Ativar animações"
+          >
+            <AnimatedProjectCard />
+          </Button>
+          <Button
+            variant="iconButton"
+            onClick={() => selectCardVariant('animationLess')}
+            toggleable={{ isActive: !animationIsActive, oneWay: true }}
+            title="Desativar animações"
+          >
+            <StaticProjectCard />
+          </Button>
+        </div>
       </PageHeader>
       <ProjectsList>
         {projects.map((project) => (

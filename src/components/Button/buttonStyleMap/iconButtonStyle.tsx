@@ -1,6 +1,21 @@
-import { css } from 'styled-components';
+import { css, DefaultTheme } from 'styled-components';
+import { ToggleableProp } from '..';
 
-export const iconButtonStyle = css<{ toggleable?: { isActive: boolean }}>`
+const iconHoverCss = ({ theme }: { theme: DefaultTheme }) => css`
+  &:hover {
+    .dynamic-stroke {
+      transition: 150ms ease-in-out stroke;
+      stroke: ${theme.colors.primaryDetails};
+    };
+    
+    .dynamic-fill {
+      transition: 150ms ease-in-out fill;
+      fill: ${theme.colors.primaryDetails};
+    };
+  }
+`;
+
+export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
   width: 4rem;
   height: 4rem;
 
@@ -11,26 +26,37 @@ export const iconButtonStyle = css<{ toggleable?: { isActive: boolean }}>`
   transition: 150ms ease-in-out filter;
 
   ${({ theme, toggleable }) => {
-    if (toggleable) return css`
-      svg * {
+    if (toggleable) {return css`
+      .dynamic-stroke {
         transition: 150ms ease-in-out stroke;
         stroke: ${toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
       }
       
-      &:hover {
-        svg * {
-          stroke: ${!toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
-        }
+      .dynamic-fill {
+        transition: 150ms ease-in-out fill;
+        fill: ${toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
       }
-    `;
+      
+      ${() => {
+        if (!toggleable.oneWay) return css`
+          &:hover {
+            .dynamic-stroke {
+              stroke: ${!toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
+            }
+            
+            .dynamic-fill {
+              fill: ${!toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
+            }
+          }
+        `;
+        
+        return css`
+          ${iconHoverCss};
+          ${toggleable.isActive && 'cursor: initial'};
+        `;
+      }}
+    `;}
 
-    return css`
-      &:hover {
-        svg * {
-          transition: 150ms ease-in-out stroke;
-          stroke: ${theme.colors.primaryDetails};
-        };
-      }
-    `;
+    return iconHoverCss;
   }};
 `;
