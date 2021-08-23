@@ -80,7 +80,6 @@ export const defaultStyle = css`
 
   .project-summary {
     position: absolute;
-    inset: 0;
 
     display: flex;
     flex-direction: column;

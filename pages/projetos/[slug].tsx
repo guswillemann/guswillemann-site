@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
 import styled from 'styled-components';
 import cms from '../../src/services/cms';
 
@@ -56,7 +57,14 @@ export default function ProjectScreen({ project }: ProjectScreenProps) {
     <ProjectScreenWrapper>
       <h1>{project.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: project.summary }} />
-      <img src={project.thumbnail.url} alt="Imagem do projeto" />
+      <Image
+        src={project.thumbnail.url}
+        alt="Imagem do projeto"
+        width={1280}
+        height={720}
+        placeholder="blur"
+        blurDataURL="/logo.svg"
+      />
       <div dangerouslySetInnerHTML={{ __html: project.description }} />
     </ProjectScreenWrapper>
   );

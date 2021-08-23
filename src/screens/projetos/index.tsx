@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { setCookie } from 'nookies';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -85,7 +86,15 @@ export default function ProjectsScreen({ projects, projectCardCookie }: Projects
       <ProjectsList>
         {projects.map((project) => (
           <ProjectCard variant={currentVariant} key={project.id}>
-            <img className="project-thumbnail" src={project.thumbnail.url} />
+            <Image
+              className="project-thumbnail"
+              src={project.thumbnail.url}
+              alt="Imagem do projeto"
+              width={1280}
+              height={720}
+              placeholder="blur"
+              blurDataURL="/logo.svg"
+            />
             <div className="project-info">
               <h2 className="project-title">{project.title}</h2>
               <div className="project-summary-container">
