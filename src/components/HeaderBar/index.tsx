@@ -1,6 +1,7 @@
 import { InputHTMLAttributes, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Box from '../Box';
+import Link from '../Link';
 import Logo from '../Logo';
 
 const Header = styled.header`
@@ -30,6 +31,16 @@ const Header = styled.header`
 
     p {
       margin-bottom: 1rem;
+    }
+  }
+
+  .nav-box {
+    ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      text-align: center;
     }
   }
 `;
@@ -118,8 +129,24 @@ export default function HeaderBar({ theme, updateColor }: any) {
           />
         </div>
       </Box>
-      <Box>
-        <a href="/projetos/">Projetos</a>
+      <Box className="nav-box">
+        <ul>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/artigos/">Artigos</Link>
+          </li>
+          <li>
+            <Link href="/contato/">Contato</Link>
+          </li>
+          <li>
+            <Link href="/sobre/">Sobre</Link>
+          </li>
+          <li>
+            <Link href="/projetos/">Projetos</Link>
+          </li>
+        </ul>
       </Box>
     </Header>
   );
