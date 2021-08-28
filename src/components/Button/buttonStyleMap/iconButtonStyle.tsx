@@ -16,9 +16,6 @@ const iconHoverCss = ({ theme }: { theme: DefaultTheme }) => css`
 `;
 
 export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
-  width: 4rem;
-  height: 4rem;
-
   background-color: transparent;
   border: none;
   cursor: pointer;

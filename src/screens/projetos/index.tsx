@@ -41,6 +41,11 @@ const PageHeader = styled.div`
     & > span {
       margin-right: 1rem;
     }
+
+    & > button {
+      width: 4rem;
+      height: 4rem;
+    }
   }
 `;
 
