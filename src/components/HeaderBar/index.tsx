@@ -1,8 +1,14 @@
 import { InputHTMLAttributes, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useModal from '../../context/Modal';
+import GitHubIcon from '../../icons/GitHubIcon';
+import LetterIcon from '../../icons/LetterIcon';
+import LinkedinIcon from '../../icons/LinkedinIcon';
 import Box from '../Box';
+import Button from '../Button';
 import Link from '../Link';
 import Logo from '../Logo';
+import EmailContactModal from '../ModalVariants/EmailContactModal';
 
 const Header = styled.header`
   display: flex;
@@ -43,6 +49,23 @@ const Header = styled.header`
       text-align: center;
     }
   }
+
+  .social-links {
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }  
+
+    li {
+      border-radius: ${({ theme }) => theme.borderRadius};
+
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
 `;
 
 const ThemeColorInputWrapper = styled.div<{ selectedColor: string }>`
@@ -74,6 +97,8 @@ function ThemeColorInput(props: ThemeColorInputProps) {
 }
 
 export default function HeaderBar({ theme, updateColor }: any) {
+  const { activeModal } = useModal();
+
   const [inputColors, setInputColors] = useState(theme.colors);
 
   function handleColorChange(color: string, value: string) {
@@ -81,6 +106,10 @@ export default function HeaderBar({ theme, updateColor }: any) {
       ...inputColors,
       [color]: value,
     })
+  }
+
+  function handleOpenEmail() {
+    activeModal(<EmailContactModal />, 'contactForm');
   }
 
   useEffect(() => {
@@ -93,6 +122,40 @@ export default function HeaderBar({ theme, updateColor }: any) {
       <Box className="logo-box">
         <Logo />
         <p>Gustavo Willemann</p>
+      </Box>
+      <Box className="social-links">
+        <ul>
+          <li>
+            <Button
+              asAnchor
+              href="https://github.com/guswillemann"
+              variant="iconButton"
+              aria-label="link para o github"
+            >
+              <GitHubIcon />
+            </Button>
+          </li>
+          <li>
+            <Button
+              asAnchor
+              href="https://www.linkedin.com/in/gustavo-willemann"
+              variant="iconButton"
+              aria-label="link para o linkedin"
+            >
+              <LinkedinIcon />
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="iconButton"
+              onClick={handleOpenEmail}
+              aria-label="abrir formulário de contato por e-mail"
+              data-tab-trap-escape="contactForm"
+            >
+              <LetterIcon />
+            </Button>
+          </li>
+        </ul>
       </Box>
       <Box className="theme-box">
         <p>Tema</p>
@@ -135,13 +198,10 @@ export default function HeaderBar({ theme, updateColor }: any) {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/artigos/">Artigos</Link>
-          </li>
-          <li>
-            <Link href="/contato/">Contato</Link>
-          </li>
-          <li>
             <Link href="/sobre/">Sobre</Link>
+          </li>
+          <li>
+            <Link href="/artigos/">Artigos</Link>
           </li>
           <li>
             <Link href="/projetos/">Projetos</Link>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Box from '../src/components/Box';
 import HeaderBar from "../src/components/HeaderBar";
+import { ModalProvider } from '../src/context/Modal';
 
 const initialTheme = {
   borderRadius: '8px',
@@ -34,7 +35,7 @@ const GlobalStyle = createGlobalStyle<{ bodyBgColor: string }>`
     height: 100vh;
   }
   
-  body, button, input  {
+  body, button, input, textarea  {
     font: 400 1.6rem sans-serif;
   }
 
@@ -95,10 +96,12 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle bodyBgColor={theme.colors.background} />
       <ThemeProvider theme={theme}>
-        <HeaderBar updateColor={updateColor} theme={theme} />
-        <MainBox>
-          <Component {...pageProps} />
-        </MainBox>
+        <ModalProvider>
+          <HeaderBar updateColor={updateColor} theme={theme} />
+          <MainBox>
+            <Component {...pageProps} />
+          </MainBox>
+        </ModalProvider>
       </ThemeProvider>
     </>
   );

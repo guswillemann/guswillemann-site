@@ -2,14 +2,22 @@ import { css, DefaultTheme } from 'styled-components';
 import { ToggleableProp } from '..';
 
 const iconHoverCss = ({ theme }: { theme: DefaultTheme }) => css`
-  &:hover {
+  .dynamic-stroke {
+    transition: 150ms ease-in-out stroke;
+    stroke: ${theme.colors.text};
+  };
+  
+  .dynamic-fill {
+    transition: 150ms ease-in-out fill;
+    fill: ${theme.colors.text};
+  };
+
+  &:hover, &:focus {
     .dynamic-stroke {
-      transition: 150ms ease-in-out stroke;
       stroke: ${theme.colors.primaryDetails};
     };
     
     .dynamic-fill {
-      transition: 150ms ease-in-out fill;
       fill: ${theme.colors.primaryDetails};
     };
   }
@@ -36,7 +44,7 @@ export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
       
       ${() => {
         if (!toggleable.oneWay) return css`
-          &:hover {
+          &:hover, &:focus {
             .dynamic-stroke {
               stroke: ${!toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
             }
