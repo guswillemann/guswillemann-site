@@ -51,7 +51,6 @@ export const defaultStyle = css`
       top: ${paddingWidth};
       right: ${paddingWidth};
   
-      visibility: hidden;
       opacity: 0;
         
       padding: 0.5rem;
@@ -102,7 +101,6 @@ export const defaultStyle = css`
       }
 
       a {
-        visibility: initial;
         opacity: 1;
       }
     }

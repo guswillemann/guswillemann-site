@@ -10,7 +10,7 @@ export default function ProjectPage({ projects, projectCardCookie }: ProjectPage
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const projectCardCookie = parseCookies(ctx)[PROJECT_CARD_COOKIE];
+  const projectCardCookie = parseCookies(ctx)[PROJECT_CARD_COOKIE] || null;
   const cmsResponse = await cms.gql.query(`{
     allProjects (orderBy: _firstPublishedAt_DESC) {
       id
