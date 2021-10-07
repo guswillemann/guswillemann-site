@@ -9,6 +9,8 @@ declare module 'styled-components' {
       text: string;
       primaryMain: string;
       primaryDetails: string;
+      success: string;
+      error: string;
     }
   }
 }

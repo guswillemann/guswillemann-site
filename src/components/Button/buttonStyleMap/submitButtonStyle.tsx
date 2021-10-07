@@ -4,19 +4,24 @@ export const submitButtonStyle = css`
   height: 4rem;
   background-color: transparent;
   transition: ease-in-out 150ms;
+  cursor: pointer;
+  border: none;
+
+  font-weight: 700;
   
   ${({ theme }) => ({
     borderRadius: theme.borderRadius,
     color: theme.colors.text,
-    border: `4px solid ${theme.colors.primaryMain}`,
+    backgroundColor: theme.colors.success,
   })};
 
-  &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.colors.primaryMain};
-    cursor: pointer;
+  &:hover {
+    filter: brightness(1.1);
   }
 
   &:disabled {
-    border-color: grey;
+    background-color: transparent;
+    opacity: 0.5;
+    cursor: initial;
   }
 `;

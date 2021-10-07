@@ -1,11 +1,11 @@
 import { AppProps } from 'next/app';
 import { useState } from "react";
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider, DefaultTheme } from "styled-components";
 import Box from '../src/components/Box';
 import HeaderBar from "../src/components/HeaderBar";
 import { ModalProvider } from '../src/context/Modal';
 
-const initialTheme = {
+const initialTheme: DefaultTheme = {
   borderRadius: '8px',
   colors: {
     background: '#000000',
@@ -13,6 +13,8 @@ const initialTheme = {
     text: '#FAFAFA',
     primaryMain: '#028A38',
     primaryDetails: '#25A737',
+    success: '#25A737',
+    error: '#c04141',
   }
 }
 
