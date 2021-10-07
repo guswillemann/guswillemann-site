@@ -54,7 +54,7 @@ const Header = styled.header`
     ul {
       list-style: none;
       display: flex;
-      gap: 1rem;
+      gap: 2rem;
       justify-content: center;
       align-items: center;
     }  

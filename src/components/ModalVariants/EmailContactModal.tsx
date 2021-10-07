@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useModal from '../../context/Modal';
 import XIcon from '../../icons/XIcon';
@@ -6,13 +6,13 @@ import Button from '../Button';
 
 const EmailModalWrapper = styled.div`
   @keyframes grow {
-    0% { transform: scale(0) };
+    0% { transform: scale(0.65) };
     100% { transform: scale(1) };
   }
   
   @keyframes shrink {
     0% { transform: scale(1) };
-    100% { transform: scale(0) };
+    100% { transform: scale(0.65) };
   }
 
   position: relative;
@@ -27,7 +27,6 @@ const EmailModalWrapper = styled.div`
     borderRadius: theme.borderRadius,
     backgroundColor: theme.colors.box,
     color: theme.colors.text,
-    border: `2px solid ${theme.colors.primaryMain}`,
   })};
 
   display: flex;
@@ -110,7 +109,14 @@ const EmailModalWrapper = styled.div`
 
 export default function EmailContactModal() {
   const { isVisible, closeModal, endModal } = useModal();
-    
+  const [formValues, setFormValues] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+
+  const isValidForm = Boolean(formValues.name && formValues.email && formValues.message)
+
   useEffect(() => {
     function tabPressHandler(e: any) {
       if (e.key === 'Tab') {
@@ -135,19 +141,27 @@ export default function EmailContactModal() {
     return () => document.removeEventListener('keydown', tabPressHandler);
   }, [isVisible])
 
+  function handleFormChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setFormValues((old) => ({
+      ...old,
+      [e.target.name]: e.target.value
+    }))
+  }
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-
-    const nameInput = document.getElementById('contact-form-name') as HTMLInputElement;
-    const emailInput = document.getElementById('contact-form-email') as HTMLInputElement;
-    const messageTextArea = document.getElementById('contact-form-message') as HTMLTextAreaElement;
-
-    console.log({
-      name: nameInput.value,
-      email: emailInput.value,
-      message: messageTextArea.value,
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formValues),
+    }).then((res) => {
+      if (res.status === 200) {
+        endModal();
+      }
     });
-    endModal();
   }
   
   return (
@@ -156,19 +170,41 @@ export default function EmailContactModal() {
       <form onSubmit={handleSubmit}>
         <div className="label-input">
           <label htmlFor="contact-form-name">Nome</label>
-          <input data-tab-trap="start" id="contact-form-name" type="text" placeholder="Nome" />
+          <input
+            name="name"
+            data-tab-trap="start"
+            id="contact-form-name"
+            type="text"
+            placeholder="Nome"
+            onChange={handleFormChange}
+            value={formValues.name}
+          />
         </div>
         <div className="label-input">
           <label htmlFor="contact-form-email">E-mail</label>
-          <input id="contact-form-email" type="email" placeholder="email@exemplo.com" />
+          <input
+            name="email"
+            id="contact-form-email"
+            type="email"
+            placeholder="email@exemplo.com"
+            onChange={handleFormChange}
+            value={formValues.email}
+          />
         </div>
         <div className="label-textarea">
           <label htmlFor="contact-form-message">Mensagem</label>
-          <textarea id="contact-form-message" placeholder="mensagem do e-mail" />
+          <textarea
+            name="message"
+            id="contact-form-message"
+            placeholder="mensagem do e-mail"
+            onChange={handleFormChange}
+            value={formValues.message}
+          />
         </div>
         <Button
-          variant="default"
+          variant="submit"
           type="submit"
+          disabled={!isValidForm}
         >
           Enviar
         </Button>
