@@ -4,21 +4,21 @@ import { ToggleableProp } from '..';
 const iconHoverCss = ({ theme }: { theme: DefaultTheme }) => css`
   .dynamic-stroke {
     transition: 150ms ease-in-out stroke;
-    stroke: ${theme.colors.text};
+    stroke: ${theme.colors.box.contrast};
   };
   
   .dynamic-fill {
     transition: 150ms ease-in-out fill;
-    fill: ${theme.colors.text};
+    fill: ${theme.colors.box.contrast};
   };
 
   &:hover, &:focus {
     .dynamic-stroke {
-      stroke: ${theme.colors.primaryDetails};
+      stroke: ${theme.colors.secondary.color};
     };
     
     .dynamic-fill {
-      fill: ${theme.colors.primaryDetails};
+      fill: ${theme.colors.secondary.color};
     };
   }
 `;
@@ -34,23 +34,23 @@ export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
     if (toggleable) {return css`
       .dynamic-stroke {
         transition: 150ms ease-in-out stroke;
-        stroke: ${toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
+        stroke: ${toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
       }
       
       .dynamic-fill {
         transition: 150ms ease-in-out fill;
-        fill: ${toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
+        fill: ${toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
       }
       
       ${() => {
         if (!toggleable.oneWay) return css`
           &:hover, &:focus {
             .dynamic-stroke {
-              stroke: ${!toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
+              stroke: ${!toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
             }
             
             .dynamic-fill {
-              fill: ${!toggleable?.isActive ? theme.colors.primaryDetails : theme.colors.text};
+              fill: ${!toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
             }
           }
         `;

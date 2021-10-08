@@ -8,13 +8,30 @@ import { ModalProvider } from '../src/context/Modal';
 const initialTheme: DefaultTheme = {
   borderRadius: '8px',
   colors: {
-    background: '#000000',
-    box: '#191919',
-    text: '#FAFAFA',
-    primaryMain: '#028A38',
-    primaryDetails: '#25A737',
-    success: '#25A737',
-    error: '#c04141',
+    background: {
+      color: '#000000',
+      contrast: '#ffffff'
+    },
+    box: {
+      color: '#191919',
+      contrast: '#ffffff',
+    },
+    primary: {
+      color: '#028A38',
+      contrast: '#ffffff',
+    },
+    secondary: {
+      color: '#25A737',
+      contrast: '#ffffff',
+    },
+    success: {
+      color: '#25A737',
+      contrast: '#ffffff',
+    },
+    error: {
+      color: '#c04141',
+      contrast: '#ffffff',
+    },
   }
 }
 
@@ -75,15 +92,15 @@ const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
   
   &::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background: ${({ theme }) => theme.colors.primaryDetails};
+    background: ${({ theme }) => theme.colors.secondary.color};
   }
   
   &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.primaryMain};
+    background: ${({ theme }) => theme.colors.primary.color};
   }
 
   /* scrollbar Firefox */
-  scrollbar-color: ${({ theme }) => `${theme.colors.primaryMain} ${theme.colors.box}`};
+  scrollbar-color: ${({ theme }) => `${theme.colors.primary.color} ${theme.colors.box.color}`};
   scrollbar-width: thin;
 `;
 
@@ -96,7 +113,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <GlobalStyle bodyBgColor={theme.colors.background} />
+      <GlobalStyle bodyBgColor={theme.colors.background.color} />
       <ThemeProvider theme={theme}>
         <ModalProvider>
           <HeaderBar updateColor={updateColor} theme={theme} />

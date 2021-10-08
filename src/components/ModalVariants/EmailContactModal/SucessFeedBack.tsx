@@ -39,7 +39,7 @@ const SuccessFeedBackWrapper = styled.div`
     justify-content: center;
     align-items: center;
 
-    background-color: ${({ theme }) => theme.colors.success};
+    background-color: ${({ theme }) => theme.colors.success.color};
     animation: ${animationDuration}ms success forwards ease-in-out;
     border-radius: 50%;
   }

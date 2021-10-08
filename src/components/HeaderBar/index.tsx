@@ -163,31 +163,25 @@ export default function HeaderBar({ theme, updateColor }: any) {
           <ThemeColorInput
             name="background"
             type="color"
-            value={theme.colors.background}
+            value={theme.colors.background.color}
             onChange={(e) => handleColorChange('background', e.target.value)}
           />
           <ThemeColorInput
             name="box"
             type="color"
-            value={theme.colors.box}
+            value={theme.colors.box.color}
             onChange={(e) => handleColorChange('box', e.target.value)}
-          />
-          <ThemeColorInput
-            name="text"
-            type="color"
-            value={theme.colors.text}
-            onChange={(e) => handleColorChange('text', e.target.value)}
           />
           <ThemeColorInput
             name="primaryMain"
             type="color"
-            value={theme.colors.primaryMain}
+            value={theme.colors.primary.color}
             onChange={(e) => handleColorChange('primaryMain', e.target.value)}
           />
           <ThemeColorInput
             name="primaryDetails"
             type="color"
-            value={theme.colors.primaryDetails}
+            value={theme.colors.secondary.color}
             onChange={(e) => handleColorChange('primaryDetails', e.target.value)}
           />
         </div>

@@ -31,8 +31,8 @@ export const defaultStyle = css`
 
     padding: ${paddingWidth};
     border-radius: ${({ theme }) => theme.borderRadius};
-    border: 4px solid ${({ theme }) => theme.colors.primaryMain};
-    background-color: ${({ theme }) => theme.colors.background};
+    border: 4px solid ${({ theme }) => theme.colors.primary.color};
+    background-color: ${({ theme }) => theme.colors.background.color};
     
     overflow: hidden;
 
@@ -54,7 +54,7 @@ export const defaultStyle = css`
       opacity: 0;
         
       padding: 0.5rem;
-      background-color: ${({ theme }) => theme.colors.primaryDetails};
+      background-color: ${({ theme }) => theme.colors.secondary.color};
       border-radius: calc(${({ theme }) => theme.borderRadius} / 2);
       
       color: inherit;
@@ -89,7 +89,7 @@ export const defaultStyle = css`
   }
   
   &:hover, &:focus-within {
-    border-color: ${({ theme }) => theme.colors.primaryMain};
+    border-color: ${({ theme }) => theme.colors.primary.color};
 
     .project-info {
       top: 0;

@@ -11,8 +11,8 @@ export const submitButtonStyle = css`
   
   ${({ theme }) => ({
     borderRadius: theme.borderRadius,
-    color: theme.colors.text,
-    backgroundColor: theme.colors.success,
+    color: theme.colors.success.contrast,
+    backgroundColor: theme.colors.success.color,
   })};
 
   &:hover {

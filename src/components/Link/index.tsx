@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 const StyledLink = styled.a<{ isCurrentPage: boolean }>`
   color: ${({ theme, isCurrentPage }) => isCurrentPage
-    ? theme.colors.primaryMain
-    : theme.colors.text
+    ? theme.colors.primary.color
+    : theme.colors.primary.contrast
   };
 
   text-decoration: none;

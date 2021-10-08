@@ -31,7 +31,7 @@ const ProjectScreenWrapper = styled.div`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.primaryDetails};
+    color: ${({ theme }) => theme.colors.secondary.color};
     text-decoration: none;
     cursor: pointer;
 

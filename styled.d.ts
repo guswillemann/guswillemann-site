@@ -4,13 +4,30 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     borderRadius: string;
     colors: {
-      background: string;
-      box: string;
-      text: string;
-      primaryMain: string;
-      primaryDetails: string;
-      success: string;
-      error: string;
+      background: {
+        color: string;
+        contrast: string;
+      };
+      box: {
+        color: string;
+        contrast: string;
+      };
+      primary: {
+        color: string;
+        contrast: string;
+      };
+      secondary: {
+        color: string;
+        contrast: string;
+      };
+      success: {
+        color: string;
+        contrast: string;
+      };
+      error: {
+        color: string;
+        contrast: string;
+      };
     }
   }
 }

@@ -27,8 +27,8 @@ const EmailModalWrapper = styled.div`
   
   ${({ theme }) => ({
     borderRadius: theme.borderRadius,
-    backgroundColor: theme.colors.box,
-    color: theme.colors.text,
+    backgroundColor: theme.colors.box.color,
+    color: theme.colors.box.contrast,
   })};
 
   display: flex;
@@ -59,8 +59,8 @@ const EmailModalWrapper = styled.div`
     max-width: 100%;
 
     ${({ theme }) => ({
-      backgroundColor: theme.colors.background,
-      color: theme.colors.text,
+      backgroundColor: theme.colors.background.color,
+      color: theme.colors.background.contrast,
       borderRadius: theme.borderRadius,
     })};
 
@@ -84,8 +84,8 @@ const EmailModalWrapper = styled.div`
     padding: 1rem;
 
     ${({ theme }) => ({
-      backgroundColor: theme.colors.background,
-      color: theme.colors.text,
+      backgroundColor: theme.colors.background.color,
+      color: theme.colors.background.contrast,
       borderRadius: theme.borderRadius,
     })};
 
