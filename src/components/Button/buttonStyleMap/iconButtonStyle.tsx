@@ -2,16 +2,6 @@ import { css, DefaultTheme } from 'styled-components';
 import { ToggleableProp } from '..';
 
 const iconHoverCss = ({ theme }: { theme: DefaultTheme }) => css`
-  .dynamic-stroke {
-    transition: 150ms ease-in-out stroke;
-    stroke: ${theme.colors.box.contrast};
-  };
-  
-  .dynamic-fill {
-    transition: 150ms ease-in-out fill;
-    fill: ${theme.colors.box.contrast};
-  };
-
   &:hover, &:focus {
     .dynamic-stroke {
       stroke: ${theme.colors.secondary.color};
@@ -28,17 +18,21 @@ export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
   border: none;
   cursor: pointer;
 
-  transition: 150ms ease-in-out filter;
+  .dynamic-stroke {
+    transition: 150ms ease-in-out stroke;
+  }
+  
+  .dynamic-fill {
+    transition: 150ms ease-in-out fill;
+  }
 
   ${({ theme, toggleable }) => {
     if (toggleable) {return css`
       .dynamic-stroke {
-        transition: 150ms ease-in-out stroke;
         stroke: ${toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
       }
       
       .dynamic-fill {
-        transition: 150ms ease-in-out fill;
         fill: ${toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
       }
       
@@ -62,6 +56,16 @@ export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
       }}
     `;}
 
-    return iconHoverCss;
+    return css`
+      .dynamic-stroke {
+        stroke: ${theme.colors.box.contrast};
+      };
+      
+      .dynamic-fill {
+        fill: ${theme.colors.box.contrast};
+      };
+      
+      ${iconHoverCss};
+    `;
   }};
 `;
