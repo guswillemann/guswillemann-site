@@ -18,6 +18,8 @@ export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
   border: none;
   cursor: pointer;
 
+  transition: 150ms ease-in-out filter;
+  
   .dynamic-stroke {
     transition: 150ms ease-in-out stroke;
   }
@@ -39,13 +41,7 @@ export const iconButtonStyle = css<{ toggleable?: ToggleableProp}>`
       ${() => {
         if (!toggleable.oneWay) return css`
           &:hover, &:focus {
-            .dynamic-stroke {
-              stroke: ${!toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
-            }
-            
-            .dynamic-fill {
-              fill: ${!toggleable?.isActive ? theme.colors.secondary.color : theme.colors.box.contrast};
-            }
+            filter: brightness(0.75);
           }
         `;
         
