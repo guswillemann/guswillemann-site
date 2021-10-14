@@ -2,6 +2,7 @@ import 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
+    currentActive: 'light' | 'dark';
     borderRadius: string;
     colors: {
       background: {

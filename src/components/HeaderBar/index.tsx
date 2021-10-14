@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
 import useModal from '../../context/Modal';
 import GitHubIcon from '../../icons/GitHubIcon';
@@ -24,19 +24,6 @@ const Header = styled.header`
     p {
       margin-top: 1rem;
       font-size: 2rem;
-    }
-  }
-
-  .theme-box {
-    .theme-palette {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    p {
-      margin-bottom: 1rem;
     }
   }
 
@@ -68,54 +55,16 @@ const Header = styled.header`
   }
 `;
 
-const ThemeColorInputWrapper = styled.div<{ selectedColor: string }>`
-  display: inline-block;
-  background-color: ${({ selectedColor }) => selectedColor};
-  border: none;
-  width: 3rem;
-  height: 3rem;
+type HeaderBarProps = {
+  themePicker: ReactNode;
+};
 
-  border: 2px ridge white;
-  
-  input {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-  }
-`;
-
-type ThemeColorInputProps = InputHTMLAttributes<HTMLInputElement> & {
-  value: string;
-}
-
-function ThemeColorInput(props: ThemeColorInputProps) {
-  return (
-    <ThemeColorInputWrapper selectedColor={props.value}>
-      <input aria-label={`Selecione a cor do ${props.name}`} {...props} />
-    </ThemeColorInputWrapper>
-  );
-}
-
-export default function HeaderBar({ theme, updateColor }: any) {
+export default function HeaderBar({ themePicker }: HeaderBarProps) {
   const { activeModal } = useModal();
-
-  const [inputColors, setInputColors] = useState(theme.colors);
-
-  function handleColorChange(color: string, value: string) {
-    setInputColors({
-      ...inputColors,
-      [color]: value,
-    })
-  }
 
   function handleOpenEmail() {
     activeModal(<EmailContactModal />, 'contactForm');
   }
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => updateColor(inputColors), 200);
-    return () => clearTimeout(timeoutId);
-  }, [inputColors]);
 
   return (
     <Header>
@@ -158,35 +107,9 @@ export default function HeaderBar({ theme, updateColor }: any) {
         </ul>
       </Box>
       <Box className="theme-box">
-        <p>Tema</p>
-        <div className="theme-palette">
-          <ThemeColorInput
-            name="background"
-            type="color"
-            value={theme.colors.background.color}
-            onChange={(e) => handleColorChange('background', e.target.value)}
-          />
-          <ThemeColorInput
-            name="box"
-            type="color"
-            value={theme.colors.box.color}
-            onChange={(e) => handleColorChange('box', e.target.value)}
-          />
-          <ThemeColorInput
-            name="primaryMain"
-            type="color"
-            value={theme.colors.primary.color}
-            onChange={(e) => handleColorChange('primaryMain', e.target.value)}
-          />
-          <ThemeColorInput
-            name="primaryDetails"
-            type="color"
-            value={theme.colors.secondary.color}
-            onChange={(e) => handleColorChange('primaryDetails', e.target.value)}
-          />
-        </div>
+        {themePicker}
       </Box>
-      <Box className="nav-box">
+      <Box as="nav" className="nav-box">
         <ul>
           <li>
             <Link href="/">Home</Link>

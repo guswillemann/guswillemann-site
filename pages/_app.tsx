@@ -1,38 +1,74 @@
 import { AppProps } from 'next/app';
 import { useState } from "react";
-import styled, { createGlobalStyle, ThemeProvider, DefaultTheme } from "styled-components";
+import styled, { createGlobalStyle, DefaultTheme, ThemeProvider } from "styled-components";
 import Box from '../src/components/Box';
 import HeaderBar from "../src/components/HeaderBar";
+import ThemePicker from '../src/components/ThemePicker';
 import { ModalProvider } from '../src/context/Modal';
+import setThemeTransition from '../src/util/setThemeTransition';
 
-const initialTheme: DefaultTheme = {
+const darkTheme: DefaultTheme['colors'] = {
+  background: {
+    color: '#000000',
+    contrast: '#FFFFFF'
+  },
+  box: {
+    color: '#191919',
+    contrast: '#FFFFFF',
+  },
+  primary: {
+    color: '#028A38',
+    contrast: '#FFFFFF',
+  },
+  secondary: {
+    color: '#25A737',
+    contrast: '#FFFFFF',
+  },
+  success: {
+    color: '#25A737',
+    contrast: '#FFFFFF',
+  },
+  error: {
+    color: '#c04141',
+    contrast: '#FFFFFF',
+  },
+};
+
+const lightTheme: DefaultTheme['colors'] = {
+  background: {
+    color: '#FFFFFF',
+    contrast: '#000000'
+  },
+  box: {
+    color: '#ECECEC',
+    contrast: '#000000',
+  },
+  primary: {
+    color: '#028A38',
+    contrast: '#000000',
+  },
+  secondary: {
+    color: '#25A737',
+    contrast: '#000000',
+  },
+  success: {
+    color: '#25A737',
+    contrast: '#000000',
+  },
+  error: {
+    color: '#c04141',
+    contrast: '#000000',
+  },
+};
+
+const colorsPresets = {
+  dark: darkTheme,
+  light: lightTheme,
+}
+
+const initialTheme = {
+  currentActive: 'dark' as DefaultTheme['currentActive'],
   borderRadius: '8px',
-  colors: {
-    background: {
-      color: '#000000',
-      contrast: '#ffffff'
-    },
-    box: {
-      color: '#191919',
-      contrast: '#ffffff',
-    },
-    primary: {
-      color: '#028A38',
-      contrast: '#ffffff',
-    },
-    secondary: {
-      color: '#25A737',
-      contrast: '#ffffff',
-    },
-    success: {
-      color: '#25A737',
-      contrast: '#ffffff',
-    },
-    error: {
-      color: '#c04141',
-      contrast: '#ffffff',
-    },
-  }
 }
 
 const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
@@ -76,6 +112,8 @@ const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
     flex-direction: column;
     padding: 1.5rem;
     height: 100vh;
+    
+    ${setThemeTransition(['background-color'])}
   }
   
   body, button, input, textarea  {
@@ -105,18 +143,35 @@ const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
 `;
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [ theme, setTheme ] = useState(initialTheme as any);
+  const [ theme, setTheme ] = useState({
+    ...initialTheme,
+    colors: colorsPresets[initialTheme.currentActive],
+  });
 
-  function updateColor(inputColors: Record<string, string>) {
-    setTheme({ ...theme, colors: inputColors });
+  function updateColor(newColors: DefaultTheme['colors']) {
+    setTheme({ ...theme, colors: newColors });
   }
+
+  function activeColorsPreset(presetName: DefaultTheme['currentActive']) {
+    setTheme({
+      ...theme,
+      currentActive: presetName,
+      colors: colorsPresets[presetName],
+    });
+  }
+
+  const themePicker = (<ThemePicker
+    activeColorsPreset={activeColorsPreset}
+    updateColor={updateColor}
+    theme={theme}
+  />);
 
   return (
     <>
       <GlobalStyle theme={theme} />
       <ThemeProvider theme={theme}>
         <ModalProvider>
-          <HeaderBar updateColor={updateColor} theme={theme} />
+          <HeaderBar themePicker={themePicker} />
           <MainBox>
             <Component {...pageProps} />
           </MainBox>

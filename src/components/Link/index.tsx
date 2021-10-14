@@ -1,15 +1,23 @@
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import setThemeTransition from '../../util/setThemeTransition';
 
 const StyledLink = styled.a<{ isCurrentPage: boolean }>`
-  color: ${({ theme, isCurrentPage }) => isCurrentPage
-    ? theme.colors.primary.color
-    : theme.colors.primary.contrast
+  ${({ theme, isCurrentPage }) => isCurrentPage
+    ? css`
+      color: ${theme.colors.primary.color};
+      font-weight: 700;
+    `
+    : css `
+      color: ${theme.colors.box.contrast};
+    `
   };
 
   text-decoration: none;
+
+  ${setThemeTransition(['color'])}
 
   &:hover {
     filter: brightness(0.75);
