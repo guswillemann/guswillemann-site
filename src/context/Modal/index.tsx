@@ -78,7 +78,7 @@ export function ModalProvider({ children }: ModalProviderProps) {
       {children}
       <ModalContainer
         id="modal-container"
-        onClick={(e: any) => {if (e.target.id === "modal-container") closeModal()}}
+        onMouseDown={(e: any) => {if (e.target.id === "modal-container") closeModal()}}
         className={isVisible ? 'visible' : ''}
       >
         {modalContent}
