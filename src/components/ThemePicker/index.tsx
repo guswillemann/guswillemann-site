@@ -6,6 +6,7 @@ import SunIcon from '../../icons/SunIcon';
 import XIcon from '../../icons/XIcon';
 import Button from '../Button';
 import ColorInput from '../ColorInput';
+import Switch from '../Switch';
 
 type ColorPaletteProps = {
   paletteName: keyof DefaultTheme['colors'];
@@ -46,15 +47,6 @@ const ThemePickerWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    div {
-      display: grid;
-      grid-template-columns: 3rem 3rem;
-
-      button {
-        width: 100%;
-      }
-    }
 
     .plus-theme {
       width: 3rem;
@@ -104,8 +96,13 @@ export default function ThemePicker({ theme, updateColor, activeColorsPreset }: 
   const [inputColors, setInputColors] = useState(theme.colors);
   const [isCustomizing, setIsCustomizing] = useState(false);
 
-  const isDarkTheme = theme.currentActive === 'dark';
   const isLightTheme = theme.currentActive === 'light';
+  
+  function handleThemeChange() {
+    isLightTheme
+      ? activeColorsPreset('dark')
+      : activeColorsPreset('light');
+  }
 
   function handleColorChange(palette: keyof DefaultTheme['colors'], type: string, value: string) {
     setInputColors({
@@ -130,22 +127,13 @@ export default function ThemePicker({ theme, updateColor, activeColorsPreset }: 
     <ThemePickerWrapper>
       <div className="dark-light-toggle">
         <span>Tema: </span>
-        <div>
-          <Button
-            variant="iconButton"
-            onClick={() => activeColorsPreset('light')}
-            toggleable={{ isActive: isLightTheme, oneWay: true }}
-          >
-            <SunIcon />
-          </Button>
-          <Button
-            variant="iconButton"
-            onClick={() => activeColorsPreset('dark')}
-            toggleable={{ isActive: isDarkTheme, oneWay: true }}
-          >
-            <MoonIcon />
-          </Button>
-        </div>
+        <Switch
+          name="alternar modo do tema"
+          stateOneIcon={<SunIcon />}
+          stateTwoIcon={<MoonIcon />}
+          currentState={isLightTheme}
+          onClick={handleThemeChange}
+        />
         <Button
           className="plus-theme"
           variant="iconButton"

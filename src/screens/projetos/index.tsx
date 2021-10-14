@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { setCookie } from 'nookies';
 import { useState } from 'react';
 import styled from 'styled-components';
-import Button from '../../components/Button';
+import Switch from '../../components/Switch';
 import AnimatedProjectCard from '../../icons/AnimatedProjectCard';
 import StaticProjectCard from '../../icons/StaticProjectCard';
 import { projectCardStyleMap, ProjectCardVariants } from './projectCardStyleMap';
@@ -41,11 +41,6 @@ const PageHeader = styled.div`
     & > span {
       margin-right: 1rem;
     }
-
-    & > button {
-      width: 4rem;
-      height: 4rem;
-    }
   }
 `;
 
@@ -56,6 +51,12 @@ export default function ProjectsScreen({ projects, projectCardCookie }: Projects
     useState(projectCardCookie as ProjectCardVariants || 'default');
 
   const animationIsActive = currentVariant !== 'animationLess';
+
+  function handleCardStyleChange() {
+    !animationIsActive
+      ? selectCardVariant('default')
+      : selectCardVariant('animationLess');
+  }
 
   function selectCardVariant(variant: ProjectCardVariants) {
     setCookie(null, PROJECT_CARD_COOKIE, variant, {
@@ -70,22 +71,13 @@ export default function ProjectsScreen({ projects, projectCardCookie }: Projects
         <h1 style={{ marginBottom: '2rem' }}>Projetos</h1>
         <div>
           <span>Estilo do card:</span>
-          <Button
-            variant="iconButton"
-            onClick={() => selectCardVariant('default')}
-            toggleable={{ isActive: animationIsActive, oneWay: true }}
-            title="Ativar animações"
-          >
-            <AnimatedProjectCard />
-          </Button>
-          <Button
-            variant="iconButton"
-            onClick={() => selectCardVariant('animationLess')}
-            toggleable={{ isActive: !animationIsActive, oneWay: true }}
-            title="Desativar animações"
-          >
-            <StaticProjectCard />
-          </Button>
+          <Switch
+            name="alternar estilo do card"
+            stateOneIcon={<AnimatedProjectCard />}
+            stateTwoIcon={<StaticProjectCard />}
+            currentState={animationIsActive}
+            onClick={handleCardStyleChange}
+          />
         </div>
       </PageHeader>
       <ProjectsList>
