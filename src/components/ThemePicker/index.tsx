@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { setCookie } from 'nookies';
 import { useEffect, useState } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
 import MoonIcon from '../../icons/MoonIcon';
@@ -66,7 +67,7 @@ const ThemePickerWrapper = styled.div`
     
     &.customizing {
       margin-top: 2rem;
-      max-height: 30rem;
+      max-height: 33rem;
       visibility: initial;
     }
   }
@@ -75,7 +76,7 @@ const ThemePickerWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .color-palette {
@@ -84,44 +85,76 @@ const ThemePickerWrapper = styled.div`
     grid-template-columns: 1fr 3rem 3rem;
     margin-top: 0.5rem;
   }
+
+  .customization-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
 `;
 
 type ThemePickerProps = {
   theme: DefaultTheme;
   updateColor: (newColors: DefaultTheme['colors']) => void;
   activeColorsPreset: (presetName: DefaultTheme['currentActive']) => void;
+  toggleTheme: () => void;
 };
 
-export default function ThemePicker({ theme, updateColor, activeColorsPreset }: ThemePickerProps) {
-  const [inputColors, setInputColors] = useState(theme.colors);
-  const [isCustomizing, setIsCustomizing] = useState(false);
+type InputColor = {
+  palette: keyof DefaultTheme['colors'];
+  type: string;
+  value: string;
+};
 
+export default function ThemePicker({
+  theme, updateColor, activeColorsPreset, toggleTheme
+}: ThemePickerProps) {
+  const [inputColor, setInputColor] = useState<InputColor | null>(null);
+
+  const [isCustomizing, setIsCustomizing] = useState(false);
   const isLightTheme = theme.currentActive === 'light';
-  
-  function handleThemeChange() {
-    isLightTheme
-      ? activeColorsPreset('dark')
-      : activeColorsPreset('light');
-  }
 
   function handleColorChange(palette: keyof DefaultTheme['colors'], type: string, value: string) {
-    setInputColors({
-      ...theme.colors,
-      [palette]: {
-        ...theme.colors[palette],
-        [type]: value,
-      },
+    setInputColor({
+      palette,
+      type,
+      value,
     });
   }
+
+  useEffect(() => {
+    if (!inputColor) return;
+
+    const colorsPaletteObj = {
+      ...theme.colors,
+      [inputColor.palette]: {
+        ...theme.colors[inputColor.palette],
+        [inputColor.type]: inputColor.value,
+      },
+    };
+
+    const timeoutCallback = () => {
+      updateColor(colorsPaletteObj);
+      setInputColor(null);
+    }
+    
+    const timeoutId = setTimeout(timeoutCallback, 200);
+    return () => clearTimeout(timeoutId);
+  }, [theme, inputColor, setInputColor]);
 
   function toggleCustomization() {
     setIsCustomizing(!isCustomizing);
   }
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => updateColor(inputColors), 200);
-    return () => clearTimeout(timeoutId);
-  }, [inputColors]);
+  function handleResetTheme() {
+    setInputColor(null);
+    activeColorsPreset(theme.currentActive);
+  }
+
+  function handleSaveTheme() {
+    setCookie(null, `custom-${theme.currentActive}-theme`, JSON.stringify(theme.colors));
+  }
 
   return (
     <ThemePickerWrapper>
@@ -132,7 +165,7 @@ export default function ThemePicker({ theme, updateColor, activeColorsPreset }: 
           stateOneIcon={<SunIcon />}
           stateTwoIcon={<MoonIcon />}
           currentState={isLightTheme}
-          onClick={handleThemeChange}
+          onClick={toggleTheme}
         />
         <Button
           className="plus-theme"
@@ -159,6 +192,20 @@ export default function ThemePicker({ theme, updateColor, activeColorsPreset }: 
             onChangeCallback={handleColorChange}
           />
         ))}
+        <div className="customization-controls">
+          <Button
+            variant="textOnly"
+            onClick={handleResetTheme}
+          >
+            Redefinir
+          </Button>
+          <Button
+            variant="textOnly"
+            onClick={handleSaveTheme}
+          >
+            Salvar
+          </Button>
+        </div>
       </div>
     </ThemePickerWrapper>
   );

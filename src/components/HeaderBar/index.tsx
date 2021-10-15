@@ -115,9 +115,6 @@ export default function HeaderBar({ themePicker }: HeaderBarProps) {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/sobre/">Sobre</Link>
-          </li>
-          <li>
             <Link href="/artigos/">Artigos</Link>
           </li>
           <li>

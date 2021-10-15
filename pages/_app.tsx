@@ -1,4 +1,5 @@
-import { AppProps } from 'next/app';
+import NextApp, { AppContext, AppProps } from 'next/app';
+import { parseCookies, setCookie } from 'nookies';
 import { useState } from "react";
 import styled, { createGlobalStyle, DefaultTheme, ThemeProvider } from "styled-components";
 import Box from '../src/components/Box';
@@ -142,15 +143,28 @@ const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
   overflow-y: scroll;
 `;
 
-export default function App({ Component, pageProps }: AppProps) {
-  const [ theme, setTheme ] = useState({
-    ...initialTheme,
-    colors: colorsPresets[initialTheme.currentActive],
-  });
+const THEME_MODE_COOKIE = 'theme-mode';
+const CUSTOM_LIGHT_COOKIE = 'custom-light-theme';
+const CUSTOM_DARK_COOKIE = 'custom-dark-theme';
 
-  function updateColor(newColors: DefaultTheme['colors']) {
-    setTheme({ ...theme, colors: newColors });
-  }
+interface CustomAppProps extends AppProps {
+  themeModeCookie: DefaultTheme['currentActive'];
+  customThemeCookie: DefaultTheme['colors'];
+}
+
+export default function App({ Component, pageProps, themeModeCookie, customThemeCookie }: CustomAppProps) {
+  const [ theme, setTheme ] = useState(() => {
+    const currentActive = themeModeCookie || initialTheme.currentActive;
+    const colors = customThemeCookie
+     ? customThemeCookie
+     : colorsPresets[themeModeCookie || initialTheme.currentActive];
+
+    return {
+      ...initialTheme,
+      currentActive,
+      colors,
+    }
+  });
 
   function activeColorsPreset(presetName: DefaultTheme['currentActive']) {
     setTheme({
@@ -160,9 +174,40 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   }
 
+  function updateColor(newColors: DefaultTheme['colors']) {
+    setTheme({ ...theme, colors: newColors });
+  }
+
+  function toggleTheme() {
+    const newThemeMode = theme.currentActive === 'light'
+      ? 'dark'
+      : 'light';
+    
+    setCookie(null, THEME_MODE_COOKIE, newThemeMode);
+
+    const cookieName = theme.currentActive === 'light'
+      ? CUSTOM_DARK_COOKIE
+      : CUSTOM_LIGHT_COOKIE;
+
+    const customThemeCookie = parseCookies(null)[cookieName];
+    
+    if (customThemeCookie) {
+      const customThemeColors = JSON.parse(customThemeCookie);
+
+      setTheme({
+        ...theme,
+        currentActive: newThemeMode,
+        colors: customThemeColors,
+      });
+    } else {
+      activeColorsPreset(newThemeMode);
+    }
+  }
+
   const themePicker = (<ThemePicker
     activeColorsPreset={activeColorsPreset}
     updateColor={updateColor}
+    toggleTheme={toggleTheme}
     theme={theme}
   />);
 
@@ -179,4 +224,23 @@ export default function App({ Component, pageProps }: AppProps) {
       </ThemeProvider>
     </>
   );
+};
+
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+  const cookies = parseCookies(appContext.ctx);
+  const themeModeCookie = cookies[THEME_MODE_COOKIE];
+  const customThemeCookieStr = themeModeCookie === 'light'
+    ? cookies[CUSTOM_LIGHT_COOKIE]
+    : cookies[CUSTOM_DARK_COOKIE];
+
+  const customThemeCookie = customThemeCookieStr
+    ? JSON.parse(customThemeCookieStr)
+    : null;
+
+  return {
+    ...appProps,
+    themeModeCookie,
+    customThemeCookie,
+  };
 };
