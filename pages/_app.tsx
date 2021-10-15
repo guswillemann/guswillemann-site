@@ -35,7 +35,7 @@ const initialTheme: DefaultTheme = {
   }
 }
 
-const GlobalStyle = createGlobalStyle<{ bodyBgColor: string }>`
+const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   :root {
     font-size: 10px;
   }
@@ -44,10 +44,34 @@ const GlobalStyle = createGlobalStyle<{ bodyBgColor: string }>`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
+    /* scrollbar: Chrome, Edge, Safari and Opera */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.colors.box};
+      border-radius: 8px;
+      margin: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: ${({ theme }) => theme.colors.secondary.color};
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+      background: ${({ theme }) => theme.colors.primary.color};
+    }
+
+    /* scrollbar Firefox */
+    scrollbar-color: ${({ theme }) => `${theme.colors.primary.color} ${theme.colors.box.color}`};
+    scrollbar-width: thin;
   }
   
   body {
-    background-color: ${({ bodyBgColor }) => bodyBgColor};
+    background-color: ${({ theme }) => theme.colors.background.color};
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
@@ -78,30 +102,6 @@ const GlobalStyle = createGlobalStyle<{ bodyBgColor: string }>`
 
 const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
   overflow-y: scroll;
-
-  /* scrollbar: Chrome, Edge, Safari and Opera */
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.box};
-    border-radius: 8px;
-    margin: 4px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background: ${({ theme }) => theme.colors.secondary.color};
-  }
-  
-  &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.colors.primary.color};
-  }
-
-  /* scrollbar Firefox */
-  scrollbar-color: ${({ theme }) => `${theme.colors.primary.color} ${theme.colors.box.color}`};
-  scrollbar-width: thin;
 `;
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -113,7 +113,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <GlobalStyle bodyBgColor={theme.colors.background.color} />
+      <GlobalStyle theme={theme} />
       <ThemeProvider theme={theme}>
         <ModalProvider>
           <HeaderBar updateColor={updateColor} theme={theme} />
