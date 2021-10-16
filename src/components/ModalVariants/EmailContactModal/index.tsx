@@ -115,7 +115,7 @@ const EmailModalWrapper = styled.div`
   }
 
   .error-message  {
-    color: ${({ theme }) => theme.colors.error};
+    color: ${({ theme }) => theme.colors.error.color};
     text-align: center;
   }
 `;

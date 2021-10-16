@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
-import setThemeTransition from '../../util/setThemeTransition';
+import setThemeTransition from '../../theme/util/setThemeTransition';
 
 const ColorInputWrapper = styled.div<{ selectedColor: string }>`
   ${setThemeTransition(['background-color'])};

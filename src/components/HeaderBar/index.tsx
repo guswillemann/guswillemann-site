@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
 import useModal from '../../context/Modal';
 import GitHubIcon from '../../icons/GitHubIcon';
@@ -9,6 +8,7 @@ import Button from '../Button';
 import Link from '../Link';
 import Logo from '../Logo';
 import EmailContactModal from '../ModalVariants/EmailContactModal';
+import ThemePicker from '../ThemePicker';
 
 const Header = styled.header`
   display: flex;
@@ -55,11 +55,7 @@ const Header = styled.header`
   }
 `;
 
-type HeaderBarProps = {
-  themePicker: ReactNode;
-};
-
-export default function HeaderBar({ themePicker }: HeaderBarProps) {
+export default function HeaderBar() {
   const { activeModal } = useModal();
 
   function handleOpenEmail() {
@@ -107,7 +103,7 @@ export default function HeaderBar({ themePicker }: HeaderBarProps) {
         </ul>
       </Box>
       <Box className="theme-box">
-        {themePicker}
+        <ThemePicker />
       </Box>
       <Box as="nav" className="nav-box">
         <ul>

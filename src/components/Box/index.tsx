@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import setThemeTransition from '../../util/setThemeTransition';
+import setThemeTransition from '../../theme/util/setThemeTransition';
 
 const Box = styled.div`
   ${({ theme }) => css`

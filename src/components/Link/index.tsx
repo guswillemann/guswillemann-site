@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
-import setThemeTransition from '../../util/setThemeTransition';
+import setThemeTransition from '../../theme/util/setThemeTransition';
 
 const StyledLink = styled.a<{ isCurrentPage: boolean }>`
   ${({ theme, isCurrentPage }) => isCurrentPage

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import setThemeTransition from '../../util/setThemeTransition';
+import setThemeTransition from '../../theme/util/setThemeTransition';
 
 const SwitchWrapper = styled.button`
   overflow: hidden;

@@ -1,10 +1,11 @@
 import clsx from 'clsx';
-import { setCookie } from 'nookies';
+import { destroyCookie, setCookie } from 'nookies';
 import { useEffect, useState } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
 import MoonIcon from '../../icons/MoonIcon';
 import SunIcon from '../../icons/SunIcon';
 import XIcon from '../../icons/XIcon';
+import { themeCookiesNames } from '../../theme';
 import Button from '../Button';
 import ColorInput from '../ColorInput';
 import Switch from '../Switch';
@@ -94,26 +95,21 @@ const ThemePickerWrapper = styled.div`
   }
 `;
 
-type ThemePickerProps = {
-  theme: DefaultTheme;
-  updateColor: (newColors: DefaultTheme['colors']) => void;
-  activeColorsPreset: (presetName: DefaultTheme['currentActive']) => void;
-  toggleTheme: () => void;
-};
-
 type InputColor = {
   palette: keyof DefaultTheme['colors'];
   type: string;
   value: string;
 };
 
-export default function ThemePicker({
-  theme, updateColor, activeColorsPreset, toggleTheme
-}: ThemePickerProps) {
+export default function ThemePicker() {
+  const { controls, ...theme } = useTheme();
+  const { activeColorsPreset, toggleTheme, updateColors } = controls;
+  
   const [inputColor, setInputColor] = useState<InputColor | null>(null);
+  const [hasThemeChanges, setHasThemeChanges] = useState(false);
 
   const [isCustomizing, setIsCustomizing] = useState(false);
-  const isLightTheme = theme.currentActive === 'light';
+  const isLightTheme = theme.mode === 'light';
 
   function handleColorChange(palette: keyof DefaultTheme['colors'], type: string, value: string) {
     setInputColor({
@@ -135,13 +131,14 @@ export default function ThemePicker({
     };
 
     const timeoutCallback = () => {
-      updateColor(colorsPaletteObj);
+      updateColors(colorsPaletteObj);
       setInputColor(null);
+      setHasThemeChanges(true);
     }
     
     const timeoutId = setTimeout(timeoutCallback, 200);
     return () => clearTimeout(timeoutId);
-  }, [theme, inputColor, setInputColor]);
+  }, [theme, inputColor, setInputColor, setHasThemeChanges]);
 
   function toggleCustomization() {
     setIsCustomizing(!isCustomizing);
@@ -149,11 +146,13 @@ export default function ThemePicker({
 
   function handleResetTheme() {
     setInputColor(null);
-    activeColorsPreset(theme.currentActive);
+    activeColorsPreset(theme.mode);
+    destroyCookie(null, themeCookiesNames[theme.mode]);
   }
 
   function handleSaveTheme() {
-    setCookie(null, `custom-${theme.currentActive}-theme`, JSON.stringify(theme.colors));
+    setHasThemeChanges(false);
+    setCookie(null, themeCookiesNames[theme.mode], JSON.stringify(theme.colors));
   }
 
   return (
@@ -202,6 +201,7 @@ export default function ThemePicker({
           <Button
             variant="textOnly"
             onClick={handleSaveTheme}
+            disabled={!hasThemeChanges}
           >
             Salvar
           </Button>
