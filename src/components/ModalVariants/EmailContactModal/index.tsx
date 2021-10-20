@@ -189,7 +189,6 @@ export default function EmailContactModal() {
 
       throw new Error('Failed to send the e-mail');
     }).catch(() => {
-      console.log('catch')
       setFormState(formStates.default);
       setError(true)
     });

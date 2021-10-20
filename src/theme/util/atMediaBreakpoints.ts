@@ -25,12 +25,9 @@ type BreakpointsObjEntry = [keyof BreakpointsCSS, CSSInterpolation];
 export default function atMediaBreakpoints(BreakpointsObj: BreakpointsCSS) {
   const breakpointsEntries = Object.entries(BreakpointsObj) as BreakpointsObjEntry[];
 
-  const retorno =  breakpointsEntries.map(([breakpoint, cssValue]) => css`
+  return breakpointsEntries.map(([breakpoint, cssValue]) => css`
     @media screen and (min-width: ${breakpointsMap[breakpoint]}) {
       ${cssValue}
     }
   `)
-
-  console.log(BreakpointsObj);
-  return retorno;
 }
