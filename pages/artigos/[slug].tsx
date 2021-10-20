@@ -3,16 +3,18 @@ import PostScreen, { PostScreenProps } from '../../src/screens/PostScreen';
 import cms from '../../src/services/cms';
 
 type ProjectPageProps = {
-  project: PostScreenProps['post'];
+  article: PostScreenProps['post'];
 };
 
-export default function ProjectPage({ project }: ProjectPageProps) {
-  return <PostScreen post={project} />;
+export default function ProjectPage({ article }: ProjectPageProps) {
+  return <PostScreen post={article} />;
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  console.log(query.slug);
+
   const cmsResponse = await cms.gql.query(`{
-    project (filter: {
+    article (filter: {
       slug: {
         eq: "${query.slug}"
       }
@@ -26,13 +28,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     }
   }`);
 
-  const project = cmsResponse.data?.project;
+  const article = cmsResponse.data?.article;
 
-  if (!project) return { notFound: true };
+  if (!article) return { notFound: true };
 
   return {
     props: {
-      project,
+      article,
     },
   };
 };

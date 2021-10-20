@@ -50,7 +50,7 @@ export default function PostsScreen({ posts, postCardCookie, title }: PostsListS
         </div>
       </ScreenHeader>
       <PostsList>
-        {posts.map((post) => (
+        {posts?.map((post) => (
           <PostCard
             key={post.id}
             variant={currentVariant}
