@@ -1,9 +1,16 @@
-import { createGlobalStyle, DefaultTheme } from 'styled-components';
+import { createGlobalStyle, css, DefaultTheme } from 'styled-components';
+import atMediaBreakpoints from './util/atMediaBreakpoints';
 import setThemeTransition from './util/setThemeTransition';
 
 const GlobalStyle = createGlobalStyle<{ colors: DefaultTheme['colors'] }>`
   :root {
-    font-size: 10px;
+    font-size: 9px;
+    
+    ${atMediaBreakpoints({
+      sm: css`
+        font-size: 10px;
+      `,
+    })}
   }
 
   * {

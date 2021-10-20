@@ -1,16 +1,23 @@
 import Image from 'next/image';
 import { setCookie } from 'nookies';
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Switch from '../../components/Switch';
 import AnimatedProjectCard from '../../icons/AnimatedProjectCard';
 import StaticProjectCard from '../../icons/StaticProjectCard';
+import atMediaBreakpoints from '../../theme/util/atMediaBreakpoints';
 import { projectCardStyleMap, ProjectCardVariants } from './projectCardStyleMap';
 
 const ProjectsList = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
+
+  ${atMediaBreakpoints({
+    lg: css`
+      grid-template-columns: 1fr 1fr;
+    `,
+  })}
 `;
 
 const ProjectCard = styled.div<{ variant: ProjectCardVariants }>`
