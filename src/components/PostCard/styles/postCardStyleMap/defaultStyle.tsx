@@ -36,7 +36,9 @@ export const defaultStyle = css`
     
     overflow: hidden;
 
-    h2 {
+    .post-title {
+      font-size: 2rem;
+      font-weight: 700;
       margin-bottom: 0;
       transition-delay: 150ms;
       transition-property: margin-bottom;
@@ -96,7 +98,7 @@ export const defaultStyle = css`
       min-width: 100%;
       min-height: 100%;
       
-      h2 {
+      .post-title {
         margin-bottom: 1rem;
       }
 

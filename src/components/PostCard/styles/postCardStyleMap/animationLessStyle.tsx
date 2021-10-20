@@ -17,7 +17,10 @@ export const animationLessStyle = css`
     flex-direction: column;
     gap: 1rem;
 
-    h2 {
+    .post-title {
+      font-size: 2rem;
+      font-weight: 700;
+
       display: inline-block;
 
       position: absolute;
