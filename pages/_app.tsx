@@ -2,7 +2,7 @@ import NextApp, { AppContext, AppProps } from 'next/app';
 import { parseCookies } from 'nookies';
 import styled, { DefaultTheme } from "styled-components";
 import Box from '../src/components/Box';
-import HeaderBar from "../src/components/HeaderBar";
+import Header from '../src/components/Header';
 import { ModalProvider } from '../src/context/Modal';
 import { ThemeCookies, themeCookiesNames, ThemeProvider } from '../src/theme';
 
@@ -10,6 +10,7 @@ const AppContainer = styled.div`
   display: grid;
   grid-gap: 1.5rem;
   grid-template-columns: 23.5rem 95rem;
+  /* grid-template-columns: 8.5rem 95rem; */
   grid-template-rows: 1fr;
   padding: 1.5rem 0;
 
@@ -28,7 +29,7 @@ export default function App({ Component, pageProps, themeCookies }: CustomAppPro
     <AppContainer>
       <ThemeProvider themeCookies={themeCookies}>
         <ModalProvider>
-          <HeaderBar />
+          <Header />
           <Box as="main">
             <Component {...pageProps} />
           </Box>
