@@ -6,8 +6,17 @@ import HeaderBar from "../src/components/HeaderBar";
 import { ModalProvider } from '../src/context/Modal';
 import { ThemeCookies, themeCookiesNames, ThemeProvider } from '../src/theme';
 
-const MainBox = styled(Box).attrs(() => ({ as: 'main' }))`
-  overflow-y: scroll;
+const AppContainer = styled.div`
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: 23.5rem 95rem;
+  grid-template-rows: 1fr;
+  padding: 1.5rem 0;
+
+  justify-content: center;
+  align-content: center;
+
+  min-height: 100vh;
 `;
 
 interface CustomAppProps extends AppProps {
@@ -16,16 +25,16 @@ interface CustomAppProps extends AppProps {
 
 export default function App({ Component, pageProps, themeCookies }: CustomAppProps) {
   return (
-    <>
+    <AppContainer>
       <ThemeProvider themeCookies={themeCookies}>
         <ModalProvider>
           <HeaderBar />
-          <MainBox>
+          <Box as="main">
             <Component {...pageProps} />
-          </MainBox>
+          </Box>
         </ModalProvider>
       </ThemeProvider>
-    </>
+    </AppContainer>
   );
 };
 

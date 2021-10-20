@@ -38,27 +38,14 @@ const GlobalStyle = createGlobalStyle<{ colors: DefaultTheme['colors'] }>`
   
   body {
     background-color: ${({ colors }) => colors.background.color};
-    display: flex;
-    flex-direction: column;
-    padding: 1.5rem;
-    height: 100vh;
+    min-height: 100vh;
+    overflow-y: scroll;
     
     ${setThemeTransition(['background-color'])}
   }
   
   body, button, input, textarea  {
     font: 400 1.6rem sans-serif;
-  }
-
-  #__next {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-
-    gap: 1.5rem;
-    max-width: 1200px;
-    height: 100%;
-
-    margin: 0 auto;
   }
 
   img, svg {
