@@ -8,13 +8,13 @@ export const defaultStyle = css`
 
   border-radius: ${({ theme }) => theme.borderRadius};
 
-  .project-thumbnail {
+  .post-thumbnail {
     width: 100%;
     border-radius: ${({ theme }) => theme.borderRadius};
     border: 2px ridge;
   }
   
-  .project-info {
+  .post-info {
     transition: 300ms ease-in-out;
 
     position: absolute;
@@ -67,7 +67,7 @@ export const defaultStyle = css`
     }
   }
   
-  .project-summary-container {
+  .post-summary-container {
     position: relative;
     flex: 1;
     width: 0;
@@ -77,7 +77,7 @@ export const defaultStyle = css`
     overflow: hidden;
   }
 
-  .project-summary {
+  .post-summary {
     position: absolute;
 
     display: flex;
@@ -91,7 +91,7 @@ export const defaultStyle = css`
   &:hover, &:focus-within {
     border-color: ${({ theme }) => theme.colors.primary.color};
 
-    .project-info {
+    .post-info {
       top: 0;
       min-width: 100%;
       min-height: 100%;
@@ -105,7 +105,7 @@ export const defaultStyle = css`
       }
     }
 
-    .project-summary-container {
+    .post-summary-container {
       transition: 150ms ease-out;
 
       width: 100%;

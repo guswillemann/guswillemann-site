@@ -6,11 +6,11 @@ export const animationLessStyle = css`
   position: relative;
   padding: ${paddingWidth};
   
-  .project-thumbnail {
+  .post-thumbnail {
     border-radius: ${({ theme }) => theme.borderRadius};
   }
 
-  .project-info {
+  .post-info {
     margin-top: 1.5rem;
 
     display: flex;
@@ -48,7 +48,7 @@ export const animationLessStyle = css`
       }
     }
 
-    .project-summary {
+    .post-summary {
       height: 15rem;
       display: flex;
       flex-direction: column;

@@ -2,9 +2,9 @@ import { animationLessStyle } from './animationLessStyle';
 import { defaultStyle } from './defaultStyle';
 
 
-export type ProjectCardVariants = 'default' | 'animationLess';
+export type PostCardVariants = 'default' | 'animationLess';
 
-export const projectCardStyleMap = {
+export const postCardStyleMap = {
   default: defaultStyle,
   animationLess: animationLessStyle,
 };

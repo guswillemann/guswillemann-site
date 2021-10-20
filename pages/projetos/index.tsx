@@ -1,16 +1,19 @@
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import ProjectsScreen, { ProjectsListScreenProps, PROJECT_CARD_COOKIE } from '../../src/screens/projetos';
+import ProjectsScreen, { PostsListScreenProps, POSTS_CARD_COOKIE } from '../../src/screens/PostsScreen';
 import cms from '../../src/services/cms';
 
-type ProjectPageProps = ProjectsListScreenProps;
+type ProjectPageProps = {
+  projects: PostsListScreenProps['posts'];
+  postCardCookie: PostsListScreenProps['postCardCookie'];
+};
 
-export default function ProjectPage({ projects, projectCardCookie }: ProjectPageProps) {
-  return <ProjectsScreen projects={projects} projectCardCookie={projectCardCookie} />
+export default function ProjectPage({ projects, postCardCookie }: ProjectPageProps) {
+  return <ProjectsScreen posts={projects} postCardCookie={postCardCookie} title="Projetos" />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const projectCardCookie = parseCookies(ctx)[PROJECT_CARD_COOKIE] || null;
+  const postCardCookie = parseCookies(ctx)[POSTS_CARD_COOKIE] || null;
   const cmsResponse = await cms.gql.query(`{
     allProjects (orderBy: _firstPublishedAt_DESC) {
       id
@@ -25,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      projectCardCookie,
+      postCardCookie,
       projects: cmsResponse.data.allProjects,
     },
   };
