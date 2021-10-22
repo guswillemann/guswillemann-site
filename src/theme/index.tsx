@@ -56,7 +56,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, themeCoo
       ? 'dark'
       : 'light';
     
-    setCookie(null, themeCookiesNames.mode, newThemeMode);
+    setCookie(null, themeCookiesNames.mode, newThemeMode, {
+      path: '/',
+      maxAge: 60*60*24*7,
+    });
 
     const cookieName = themeCookiesNames[newThemeMode];
 

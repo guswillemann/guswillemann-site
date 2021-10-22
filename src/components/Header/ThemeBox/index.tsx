@@ -68,7 +68,10 @@ export default function ThemeBox() {
 
   function handleSaveTheme() {
     setHasThemeChanges(false);
-    setCookie(null, themeCookiesNames[theme.mode], JSON.stringify(theme.colors));
+    setCookie(null, themeCookiesNames[theme.mode], JSON.stringify(theme.colors), {
+      path: '/',
+      maxAge: 60*60*24*7,
+    });
   }
 
   return (
