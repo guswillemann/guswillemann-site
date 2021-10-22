@@ -11,22 +11,7 @@ export default function ProjectPage({ project }: ProjectPageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const cmsResponse = await cms.gql.query(`{
-    project (filter: {
-      slug: {
-        eq: "${query.slug}"
-      }
-    }) {
-      title
-      thumbnail {
-        url
-      }
-      description
-      summary
-    }
-  }`);
-
-  const project = cmsResponse.data?.project;
+  const project = await cms.getPostPage('project', query.slug as string);
 
   if (!project) return { notFound: true };
 

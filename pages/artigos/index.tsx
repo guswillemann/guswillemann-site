@@ -14,22 +14,12 @@ export default function ProjectPage({ articles, postCardCookie }: ProjectPagePro
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const postCardCookie = parseCookies(ctx)[POSTS_CARD_COOKIE] || null;
-  const cmsResponse = await cms.gql.query(`{
-    allArticles (orderBy: _firstPublishedAt_DESC) {
-      id
-      title
-      thumbnail {
-        url
-      }
-      summary
-      slug
-    }
-  }`);
+  const articles = await cms.getPostsList('articles');
 
   return {
     props: {
       postCardCookie,
-      articles: cmsResponse.data?.allArticles || null,
+      articles,
     },
   };
 };

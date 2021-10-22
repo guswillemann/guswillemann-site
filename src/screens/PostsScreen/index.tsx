@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
-import { setCookie } from 'nookies';
-import { useState } from 'react';
-import PostCard, { PostCardData, PostCardVariants } from '../../components/PostCard';
+import PostCard, { PostCardData } from '../../components/PostCard';
 import Switch from '../../components/Switch';
+import useCardStyleControl from '../../hook/useCardStyleControl';
 import AnimatedPostCard from '../../icons/AnimatedPostCard';
 import StaticPostCard from '../../icons/StaticPostCard';
 import { PostsList, ScreenHeader } from './styles';
+
+export { POSTS_CARD_COOKIE } from '../../hook/useCardStyleControl';
 
 export type PostsListScreenProps = {
   posts: PostCardData[];
@@ -13,26 +14,9 @@ export type PostsListScreenProps = {
   title: string;
 }
 
-export const POSTS_CARD_COOKIE = 'POSTS_CARD_COOKIE'
-
 export default function PostsScreen({ posts, postCardCookie, title }: PostsListScreenProps) {
   const router = useRouter();
-
-  const [currentVariant, setCurrentVariant] = useState(postCardCookie as PostCardVariants || 'default');
-
-  const animationIsActive = currentVariant !== 'animationLess';
-
-  function handleCardStyleChange() {
-    if (animationIsActive) selectCardVariant('animationLess');
-    else selectCardVariant('default');
-  }
-
-  function selectCardVariant(variant: PostCardVariants) {
-    setCookie(null, POSTS_CARD_COOKIE, variant, {
-      path: `${router.pathname}`,
-    });
-    setCurrentVariant(variant)
-  }
+  const { currentStyle, toggleCardStyle, isDefaultStyle } = useCardStyleControl(postCardCookie);
 
   return (
     <>
@@ -44,8 +28,8 @@ export default function PostsScreen({ posts, postCardCookie, title }: PostsListS
             name="alternar estilo do card"
             stateOneIcon={<AnimatedPostCard />}
             stateTwoIcon={<StaticPostCard />}
-            currentState={animationIsActive}
-            onClick={handleCardStyleChange}
+            currentState={isDefaultStyle}
+            onClick={toggleCardStyle}
           />
         </div>
       </ScreenHeader>
@@ -53,7 +37,7 @@ export default function PostsScreen({ posts, postCardCookie, title }: PostsListS
         {posts?.map((post) => (
           <PostCard
             key={post.id}
-            variant={currentVariant}
+            variant={currentStyle}
             postData={post}
             pathName={router.pathname}
           />
