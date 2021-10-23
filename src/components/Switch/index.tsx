@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import clsx from 'clsx';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import styled from 'styled-components';
 import setThemeTransition from '../../theme/util/setThemeTransition';
 
@@ -50,29 +51,26 @@ const SwitchWrapper = styled.button`
   }
 `;
 
-type SwitchProps = {
-  name: string;
+interface SwitchProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   stateOneIcon: ReactNode;
   stateTwoIcon: ReactNode;
   currentState: boolean;
-  onClick: () => void;
 };
 
 export default function Switch({
-  name,
   stateOneIcon,
   stateTwoIcon,
   currentState,
-  onClick,
+  className,
+  ...props
 }: SwitchProps) {
   return (
     <SwitchWrapper
-      name={name}
-      className={currentState
-        ? 'state-one'
-        : 'state-two'
-      }
-      onClick={onClick}
+      {...props}
+      className={clsx([
+        className,
+        currentState ? 'state-one' : 'state-two',
+      ])}
     >
       <div className="icons-container">
         {stateOneIcon}
