@@ -16,11 +16,11 @@ const gql = {
 };
 
 const cms = {
-  getPostsList: async (type: 'articles' | 'projects') => {
+  getPostsList: async (type: 'articles' | 'projects', locale: string) => {
     const modelType = type === 'articles' ? 'allArticles' : 'allProjects';
 
     const posts = await gql.query(`{
-      ${modelType} (orderBy: _firstPublishedAt_DESC) {
+      ${modelType} (orderBy: _firstPublishedAt_DESC, locale: ${locale}) {
         id
         title
         thumbnail {
@@ -34,8 +34,8 @@ const cms = {
     return posts.data?.[modelType] || null;
   },
 
-  getLastPosts: async () => {
-    const postQuery = `(orderBy: _createdAt_DESC, first: "1") {
+  getLastPosts: async (locale: string) => {
+    const postQuery = `(orderBy: _createdAt_DESC, first: "1", locale: ${locale}) {
       thumbnail {
         url
       }
@@ -56,13 +56,9 @@ const cms = {
     };
   },
 
-  getPostPage: async (type: 'article' | 'project', name: string) => {
+  getPostPage: async (type: 'article' | 'project', slug: string, locale: string) => {
     const page = await gql.query(`{
-      ${type} (filter: {
-        slug: {
-          eq: "${name}"
-        }
-      }) {
+      ${type} (locale: ${locale}, filter: {slug: {eq: ${slug}}}) {
         title
         thumbnail {
           url

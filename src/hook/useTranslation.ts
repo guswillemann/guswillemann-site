@@ -3,7 +3,7 @@ import { setCookie } from 'nookies';
 import { useCallback } from 'react';
 import getObjAttribute from '../utils/getObjAttribute';
 
-type LocaleOptions = 'en' | 'pt';
+export type LocaleOptions = 'en' | 'pt';
 
 type LocaleObj = {
   [key: string]: LocaleObj | string;
@@ -28,11 +28,12 @@ export default function useTranslation(translations: Translations) {
     if (locale === 'en') localeObj.locale = 'pt';
     else localeObj.locale = 'en'
     
-    router.push({ pathname, query }, asPath, localeObj);
     setCookie(null, 'NEXT_LOCALE', localeObj.locale, {
       path: '/',
       maxAge: 60*60*24*7,
     });
+    
+    router.push({ pathname, query }, asPath, localeObj);
   };
 
   return {

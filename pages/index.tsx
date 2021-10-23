@@ -9,7 +9,7 @@ export default function Home({ posts, postCardCookie }: any) {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const postCardCookie = parseCookies(ctx)[POSTS_CARD_COOKIE] || null;
-  const cmsResponse = await cms.getLastPosts();
+  const cmsResponse = await cms.getLastPosts(ctx.locale as string);
 
   return {
     props: {

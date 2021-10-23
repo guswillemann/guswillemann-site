@@ -10,8 +10,8 @@ export default function ProjectPage({ project }: ProjectPageProps) {
   return <PostScreen post={project} />;
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const project = await cms.getPostPage('project', query.slug as string);
+export const getServerSideProps: GetServerSideProps = async ({ query, locale }) => {
+  const project = await cms.getPostPage('project', query.slug as string, locale as string);
 
   if (!project) return { notFound: true };
 
