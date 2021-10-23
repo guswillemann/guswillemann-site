@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { setCookie } from 'nookies';
 import { useCallback } from 'react';
 import getObjAttribute from '../utils/getObjAttribute';
 
@@ -22,8 +23,16 @@ export default function useTranslation(translations: Translations) {
 
   const toggleLocale = () => {
     const { pathname, asPath, query } = router;
-    if (locale === 'en') router.push({ pathname, query }, asPath, { locale: 'pt' });
-    else router.push({ pathname, query }, asPath, { locale: 'en' });
+    const localeObj = { locale: '' };
+    
+    if (locale === 'en') localeObj.locale = 'pt';
+    else localeObj.locale = 'en'
+    
+    router.push({ pathname, query }, asPath, localeObj);
+    setCookie(null, 'NEXT_LOCALE', localeObj.locale, {
+      path: '/',
+      maxAge: 60*60*24*7,
+    });
   };
 
   return {
