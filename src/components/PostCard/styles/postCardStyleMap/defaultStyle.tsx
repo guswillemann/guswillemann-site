@@ -1,4 +1,5 @@
 import { css } from 'styled-components'
+import setThemeTransition from '../../../../theme/util/setThemeTransition';
 
 const paddingWidth = '4px';
 
@@ -15,8 +16,6 @@ export const defaultStyle = css`
   }
   
   .post-info {
-    transition: 300ms ease-in-out;
-
     position: absolute;
     
     top: 10%;
@@ -33,6 +32,9 @@ export const defaultStyle = css`
     border-radius: ${({ theme }) => theme.borderRadius};
     border: 4px solid ${({ theme }) => theme.colors.primary.color};
     background-color: ${({ theme }) => theme.colors.background.color};
+    color: ${({ theme }) => theme.colors.background.contrast};
+    
+    ${setThemeTransition(['all'])}
     
     overflow: hidden;
 
