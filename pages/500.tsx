@@ -2,8 +2,8 @@ import useTranslation from '../src/hook/useTranslation';
 
 export default function PageNotFound() {
   const { t } = useTranslation({
-    en: { message: 'Page not found' },
-    pt: { message: 'Página não encontrada' },
+    en: { message: 'Server-side error' },
+    pt: { message: 'Falha no servidor' },
   });
 
   return (
@@ -14,7 +14,7 @@ export default function PageNotFound() {
       width: '100%',
       height: '100%',
     }}>
-      404 | {t('message')}
+      500 | {t('message')}
     </h2>
   );
 }

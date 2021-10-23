@@ -1,0 +1,13 @@
+{
+  "header": "Contact by email",
+  "form": {
+    "name": "Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "email@example.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Email's message",
+    "submitBtn": "Send",
+    "errorMessage": "Failed to send the email"
+  },
+  "closeBtn": "close email contact form"
+}

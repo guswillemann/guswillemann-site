@@ -32,7 +32,6 @@ export default function ColorInput(props: ColorInputProps) {
   return (
     <ColorInputWrapper selectedColor={props.value}>
       <input
-        aria-label={`Selecione a cor de ${props.name}`}
         type="color"
         {...props}
       />

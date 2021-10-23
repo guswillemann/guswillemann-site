@@ -1,0 +1,16 @@
+{
+  "options": {
+    "languageBtn": "alternar idioma",
+    "themeSwitch": "altenar tema",
+    "plusBtn": "mais opções",
+    "customColor": {
+      "description": "Customizar as cores do tema selecionado",
+      "paletteLabel": {
+        "name": "Nome",
+        "inputs": "Cor / Texto"
+      },
+      "resetBtn": "Redefinir",
+      "saveBtn": "Salvar"
+    }
+  }
+}

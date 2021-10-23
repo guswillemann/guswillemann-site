@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { destroyCookie, setCookie } from 'nookies';
 import { useEffect, useState } from 'react';
 import { DefaultTheme, useTheme } from 'styled-components';
+import useTranslation from '../../../hook/useTranslation';
 import MoonIcon from '../../../icons/MoonIcon';
 import SunIcon from '../../../icons/SunIcon';
 import XIcon from '../../../icons/XIcon';
@@ -9,7 +10,10 @@ import { themeCookiesNames } from '../../../theme';
 import Button from '../../Button';
 import Switch from '../../Switch';
 import ColorPalette from './ColorPalette';
+import * as en from './i18n/en.json';
+import * as pt from './i18n/pt.json';
 import { ThemeBoxWrapper } from './styles';
+
 
 type InputColor = {
   palette: keyof DefaultTheme['colors'];
@@ -18,6 +22,7 @@ type InputColor = {
 };
 
 export default function ThemeBox() {
+  const { t, toggleLocale, locale } = useTranslation({ en, pt });
   const { controls, ...theme } = useTheme();
   const { activeColorsPreset, toggleTheme, updateColors } = controls;
   
@@ -27,13 +32,15 @@ export default function ThemeBox() {
   const [isCustomizing, setIsCustomizing] = useState(false);
   const isLightTheme = theme.mode === 'light';
 
-  function handleColorChange(palette: keyof DefaultTheme['colors'], type: string, value: string) {
+  const handleColorChange = (
+    palette: keyof DefaultTheme['colors'], type: string, value: string
+  ) => {
     setInputColor({
       palette,
       type,
       value,
     });
-  }
+  };
 
   useEffect(() => {
     if (!inputColor) return;
@@ -56,36 +63,44 @@ export default function ThemeBox() {
     return () => clearTimeout(timeoutId);
   }, [theme, inputColor, setInputColor, setHasThemeChanges]);
 
-  function toggleCustomization() {
+  const toggleCustomization = () => {
     setIsCustomizing(!isCustomizing);
-  }
+  };
 
-  function handleResetTheme() {
+  const handleResetTheme = () => {
     setInputColor(null);
     activeColorsPreset(theme.mode);
     destroyCookie(null, themeCookiesNames[theme.mode]);
-  }
+  };
 
-  function handleSaveTheme() {
+  const handleSaveTheme = () => {
     setHasThemeChanges(false);
     setCookie(null, themeCookiesNames[theme.mode], JSON.stringify(theme.colors), {
       path: '/',
       maxAge: 60*60*24*7,
     });
-  }
+  };
 
   return (
     <ThemeBoxWrapper>
       <div className="dark-light-toggle">
-        <span>Tema: </span>
+        <Button
+          aria-label={t('options.languageBtn')}
+          className="language-toggle"
+          onClick={toggleLocale}
+          variant="textOnly"
+        >
+          {locale}
+        </Button>
         <Switch
-          name="alternar modo do tema"
+          aria-label={t('options.themeSwitch')}
           stateOneIcon={<SunIcon />}
           stateTwoIcon={<MoonIcon />}
           currentState={isLightTheme}
           onClick={toggleTheme}
         />
         <Button
+          aria-label={t('options.plusBtn')}
           className="plus-theme"
           variant="iconButton"
           onClick={toggleCustomization}
@@ -98,10 +113,10 @@ export default function ThemeBox() {
         'palettes-container': true,
         'customizing': isCustomizing,
       })}>
-        <p>Customize as cores do tema selecionado.</p>
+        <p>{t('options.customColor.description')}</p>
         <div className="color-palette-label">
-          <span>Nome</span>
-          <span>Cor / Texto</span>
+          <span>{t('options.customColor.paletteLabel.name')}</span>
+          <span>{t('options.customColor.paletteLabel.inputs')}</span>
         </div>
         {Object.keys(theme.colors).map((color) => (
           <ColorPalette
@@ -115,14 +130,14 @@ export default function ThemeBox() {
             variant="textOnly"
             onClick={handleResetTheme}
           >
-            Redefinir
+            {t('options.customColor.resetBtn')}
           </Button>
           <Button
             variant="textOnly"
             onClick={handleSaveTheme}
             disabled={!hasThemeChanges}
           >
-            Salvar
+            {t('options.customColor.saveBtn')}
           </Button>
         </div>
       </div>

@@ -1,6 +1,10 @@
 import Image from 'next/image';
+import useTranslation from '../../hook/useTranslation';
+import * as en from './i18n/en.json';
+import * as pt from './i18n/pt.json';
 import PostCardWrapper from './styles';
 import { PostCardVariants as PostCardVariantsType } from './styles/postCardStyleMap';
+
 
 export type PostCardVariants = PostCardVariantsType;
 
@@ -21,12 +25,14 @@ type PostCardProps = {
 };
 
 export default function PostCard({ variant, postData, pathName }: PostCardProps) {
+  const { t } = useTranslation({ en, pt });
+
   return (
     <PostCardWrapper variant={variant}>
       <Image
         className="post-thumbnail"
         src={postData.thumbnail.url}
-        alt="Imagem do projeto"
+        alt={t('thumbnailAlt')}
         width={1280}
         height={720}
         placeholder="blur"
@@ -37,7 +43,7 @@ export default function PostCard({ variant, postData, pathName }: PostCardProps)
         <div className="post-summary-container">
           <div className="post-summary" dangerouslySetInnerHTML={{ __html: postData.summary }} />
         </div>
-        <a href={`${pathName}/${postData.slug}`}>mais detalhes</a>
+        <a href={`${pathName}/${postData.slug}`}>{t('projectLink')}</a>
       </div>
     </PostCardWrapper>
   );

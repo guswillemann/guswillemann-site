@@ -1,10 +1,14 @@
 import clsx from 'clsx';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import useModal from '../../../context/Modal';
+import useTranslation from '../../../hook/useTranslation';
 import XIcon from '../../../icons/XIcon';
 import Button from '../../Button';
+import * as en from './i18n/en.json';
+import * as pt from './i18n/pt.json';
 import EmailModalWrapper from './styles';
 import SuccessFeedBack, { animationDuration } from './SucessFeedBack';
+
 
 const formStates = {
   default: 'default',
@@ -13,6 +17,7 @@ const formStates = {
 };
 
 export default function EmailContactModal() {
+  const { t } = useTranslation({ en, pt });
   const { isVisible, closeModal, endModal } = useModal();
   const [formState, setFormState] = useState(formStates.default);
   const [error, setError] = useState(false);
@@ -93,37 +98,37 @@ export default function EmailContactModal() {
       visible: isVisible,
       success: formState === formStates.success,
     })}>
-      <h3>Contato por e-mail</h3>
+      <h3>{t('header')}</h3>
       <form onSubmit={handleSubmit}>
         <div className="label-input">
-          <label htmlFor="contact-form-name">Nome</label>
+          <label htmlFor="contact-form-name">{t('form.name')}</label>
           <input
             name="name"
             data-tab-trap="start"
             id="contact-form-name"
             type="text"
-            placeholder="Nome"
+            placeholder={t('form.name')}
             onChange={handleFormChange}
             value={formValues.name}
           />
         </div>
         <div className="label-input">
-          <label htmlFor="contact-form-email">E-mail</label>
+          <label htmlFor="contact-form-email">{t('form.emailLabel')}</label>
           <input
             name="email"
             id="contact-form-email"
             type="email"
-            placeholder="email@exemplo.com"
+            placeholder={t('form.emailPlaceholder')}
             onChange={handleFormChange}
             value={formValues.email}
           />
         </div>
         <div className="label-textarea">
-          <label htmlFor="contact-form-message">Mensagem</label>
+          <label htmlFor="contact-form-message">{t('form.messageLabel')}</label>
           <textarea
             name="message"
             id="contact-form-message"
-            placeholder="mensagem do e-mail"
+            placeholder={t('form.messagePlaceholder')}
             onChange={handleFormChange}
             value={formValues.message}
           />
@@ -133,15 +138,15 @@ export default function EmailContactModal() {
           type="submit"
           disabled={!isValidForm || formState !== formStates.default}
         >
-          Enviar
+          {t('form.submitBtn')}
         </Button>
-        {formState === formStates.default && error && <p className="error-message">Falha no envio do e-mail</p>}
+        {formState === formStates.default && error && <p className="error-message">{t('form.errorMessage')}</p>}
       </form>
       <Button
         variant="iconButton"
         onClick={() => closeModal(true)}
         data-tab-trap="end"
-        aria-label="fechar formulário de contato por e-mail"
+        aria-label={t('form.closeBtn')}
         className="close-btn"
       >
         <XIcon />

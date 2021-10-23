@@ -1,0 +1,13 @@
+{
+  "header": "Contato por email",
+  "form": {
+    "name": "Nome",
+    "emailLabel": "Email",
+    "emailPlaceholder": "email@exemplo.com",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Mensagem do email",
+    "submitBtn": "Enviar",
+    "errorMessage": "Falha no envio do email"
+  },
+  "closeBtn": "fechar formulário de contato por email"
+}

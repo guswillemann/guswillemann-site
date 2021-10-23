@@ -1,0 +1,14 @@
+{
+  "header": "Home",
+  "cardStyle": "Estilo do card",
+  "cardStyleSwitch": "alternar estilo do card",
+  "articleHeader": "Último artigo",
+  "projectHeader": "Último projeto",
+  "aboutHeader": "Sobre mim",
+  "aboutImgAlt": "foto de Gustavo Willemann",
+  "techImgAlt": "logo da tecnologia",
+  "aboutDescription": {
+    "p1": "Graduado em Engenharia Ambiental Sanitária. Atualmente estudando desenvolvimento web, em especifico o Front-End.",
+    "p2": "Além do JavaScript, HTML e CSS, adicionei o React e NextJS, na minha lista de estudos"
+  }
+}

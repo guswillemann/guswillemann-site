@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import useTranslation from '../../hook/useTranslation';
 import PostScreenWrapper from './styles';
 
 export type PostScreenProps = {
@@ -13,13 +14,18 @@ export type PostScreenProps = {
 }
 
 export default function PostScreen({ post }: PostScreenProps) {
+  const { t } = useTranslation({
+    en: { imgAlt: 'project image' },
+    pt: { imgAlt: 'imagem do projeto' },
+  });
+
   return (
     <PostScreenWrapper>
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.summary }} />
       <Image
         src={post.thumbnail.url}
-        alt="Imagem do projeto"
+        alt={t('imgAlt')}
         width={1280}
         height={720}
         placeholder="blur"

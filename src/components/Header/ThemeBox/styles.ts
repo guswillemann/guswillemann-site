@@ -4,8 +4,17 @@ import Box from '../../Box';
 export const ThemeBoxWrapper = styled(Box)`
   .dark-light-toggle {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 2rem;
+
+    .language-toggle {
+      width: 3rem;
+      height: 3rem;
+      padding: 0.5rem 0;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
 
     .plus-theme {
       width: 3rem;

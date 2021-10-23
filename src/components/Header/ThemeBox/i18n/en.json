@@ -1,0 +1,16 @@
+{
+  "options": {
+    "languageBtn": "language toggle",
+    "themeSwitch": "theme toggle",
+    "plusBtn": "more options",
+    "customColor": {
+      "description": "Customize the selected theme colors",
+      "paletteLabel": {
+        "name": "Name",
+        "inputs": "Color / Text"
+      },
+      "resetBtn": "Reset",
+      "saveBtn": "Save"
+    }
+  }
+}
