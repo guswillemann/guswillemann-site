@@ -41,7 +41,7 @@ const SuccessFeedBackWrapper = styled.div`
 
     background-color: ${({ theme }) => theme.colors.success.color};
     animation: ${animationDuration}ms success forwards ease-in-out;
-    border-radius: 50%;
+    border-radius: 25%;
   }
 
   img {
