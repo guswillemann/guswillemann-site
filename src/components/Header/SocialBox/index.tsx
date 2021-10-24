@@ -4,6 +4,7 @@ import GitHubIcon from '../../../icons/GitHubIcon';
 import LetterIcon from '../../../icons/LetterIcon';
 import LinkedinIcon from '../../../icons/LinkedinIcon';
 import Button from '../../Button';
+import Link from '../../Link';
 import EmailContactModal from '../../ModalVariants/EmailContactModal';
 import * as en from './i18n/en.json';
 import * as pt from './i18n/pt.json';
@@ -22,24 +23,24 @@ export default function SocialBox() {
     <SocialBoxWrapper>
       <ul>
         <li>
-          <Button
-            asAnchor
+          <Link
             href="https://github.com/guswillemann"
-            variant="iconButton"
             aria-label={t('github')}
+            target="_blank"
+            rel="noreferrer"
           >
             <GitHubIcon />
-          </Button>
+          </Link>
         </li>
         <li>
-          <Button
-            asAnchor
+          <Link
             href="https://www.linkedin.com/in/gustavo-willemann"
-            variant="iconButton"
             aria-label={t('linkedin')}
+            target="_blank"
+            rel="noreferrer"
           >
             <LinkedinIcon />
-          </Button>
+          </Link>
         </li>
         <li>
           <Button
