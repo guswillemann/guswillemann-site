@@ -39,33 +39,16 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
         </div>
       </ScreenHeader>
       <div className="screen-content">
-        <section className="posts-container">
-          <div>
-            <h2>{t('articleHeader')}</h2>
-            {posts.article && (<PostCard
-              variant={currentStyle}
-              postData={posts.article}
-              pathName="articles"
-            />)}
-          </div>
-          <div>
-            <h2>{t('projectHeader')}</h2>
-            {posts.project && (<PostCard
-              variant={currentStyle}
-              postData={posts.project}
-              pathName="projects"
-            />)}
-          </div>
-        </section>
         <section className="about-container">
           <h2>{t('aboutHeader')}</h2>
-          <Image
-            width={640}
-            height={640}
-            className="about-photo"
-            src="/gustavo_willemann.jpg"
-            alt={t('aboutImgAlt')}
-          />
+          <div className="about-photo">
+            <Image
+              width={640}
+              height={640}
+              src="/gustavo_willemann.jpg"
+              alt={t('aboutImgAlt')}
+            />
+          </div>
           <div className="about-techs">
             {technologies.map((tech) => (
               <TechnologylLink href={tech.link} key={`tech-${tech.name}`} rel="noreferrer" target="_blank">
@@ -83,6 +66,24 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
             <p>{t('aboutDescription.p1')}</p>
             <p>{t('aboutDescription.p2')}</p>
             <p>TypeScript &#9825;</p>
+          </div>
+        </section>
+        <section className="posts-container">
+          <div>
+            <h2>{t('articleHeader')}</h2>
+            {posts.article && (<PostCard
+              variant={currentStyle}
+              postData={posts.article}
+              pathName="articles"
+            />)}
+          </div>
+          <div>
+            <h2>{t('projectHeader')}</h2>
+            {posts.project && (<PostCard
+              variant={currentStyle}
+              postData={posts.project}
+              pathName="projects"
+            />)}
           </div>
         </section>
       </div>

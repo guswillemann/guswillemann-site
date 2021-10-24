@@ -11,15 +11,13 @@ const HomeWrapper = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    gap: 2rem;
+    gap: 8rem;
   }
 
   .posts-container {
     display: grid;
     grid-gap: 2rem;
     grid-template-columns: 1fr;
-    margin-bottom: 2rem;
 
     ${atMediaBreakpoints({
       lg: css`
@@ -57,11 +55,12 @@ const HomeWrapper = styled.div`
       justify-self: flex-start;
     }
     
-    h2 + div {
+    .about-photo {
       grid-area: photo;
       border-radius: calc(2 * ${({ theme }) => theme.borderRadius});
       display: none;
       width: 80%;
+      overflow: hidden;
 
       ${atMediaBreakpoints({
         lg: css`
