@@ -1,19 +1,12 @@
+import clsx from 'clsx';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { AnchorHTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import setThemeTransition from '../../theme/util/setThemeTransition';
 
-const StyledLink = styled.a<{ isCurrentPage: boolean }>`
-  ${({ theme, isCurrentPage }) => isCurrentPage
-    ? css`
-      color: ${theme.colors.primary.color};
-      font-weight: 700;
-    `
-    : css `
-      color: ${theme.colors.box.contrast};
-    `
-  };
+const StyledLink = styled.a`
+  color: ${({ theme }) => theme.colors.box.contrast};
 
   text-decoration: none;
 
@@ -24,14 +17,20 @@ const StyledLink = styled.a<{ isCurrentPage: boolean }>`
   }
 `;
 
-const Link: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ children, href, ...props }) => {
+const Link: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({ children, href, className, ...props }) => {
   const { pathname } = useRouter();
   
   const isCurrentPage = (pathname) === href || (pathname + '/') === href;
 
   return(
     <NextLink href={href as string} passHref>
-      <StyledLink {...props} isCurrentPage={isCurrentPage}>
+      <StyledLink
+        className={clsx([
+          className,
+          isCurrentPage && 'current-page',
+        ])}
+        {...props}
+      >
         {children}
       </StyledLink>
     </NextLink>

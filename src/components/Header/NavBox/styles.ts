@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import atMediaBreakpoints from '../../../theme/util/atMediaBreakpoints';
 import Box from '../../Box';
+import Link from '../../Link';
 
 export const NavBoxWrapper = styled(Box)`
   flex: 1;
@@ -10,6 +11,7 @@ export const NavBoxWrapper = styled(Box)`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    height: 100%;
   }
 
   ${atMediaBreakpoints({
@@ -22,4 +24,11 @@ export const NavBoxWrapper = styled(Box)`
       }
     `,
   })}
+`;
+
+export const NavLink = styled(Link)`
+  &.current-page {
+    color: ${({ theme }) => theme.colors.primary.color};
+    font-weight: 700;
+  }
 `;

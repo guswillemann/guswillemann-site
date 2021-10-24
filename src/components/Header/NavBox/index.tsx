@@ -1,8 +1,7 @@
 import useTranslation from '../../../hook/useTranslation';
-import Link from '../../Link';
 import * as en from './i18n/en.json';
 import * as pt from './i18n/pt.json';
-import { NavBoxWrapper } from './styles';
+import { NavBoxWrapper, NavLink } from './styles';
 
 export default function NavBox() {
   const { t } = useTranslation({ en, pt });
@@ -11,13 +10,13 @@ export default function NavBox() {
     <NavBoxWrapper as="nav">
       <ul>
         <li>
-          <Link href="/">{t('home')}</Link>
+          <NavLink href="/">{t('home')}</NavLink>
         </li>
         <li>
-          <Link href="/articles/">{t('articles')}</Link>
+          <NavLink href="/articles/">{t('articles')}</NavLink>
         </li>
         <li>
-          <Link href="/projects/">{t('projects')}</Link>
+          <NavLink href="/projects/">{t('projects')}</NavLink>
         </li>
       </ul>
     </NavBoxWrapper>
