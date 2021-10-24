@@ -39,7 +39,7 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
         </div>
       </ScreenHeader>
       <div className="screen-content">
-        <div className="posts-container">
+        <section className="posts-container">
           <div>
             <h2>{t('articleHeader')}</h2>
             {posts.article && (<PostCard
@@ -56,8 +56,8 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
               pathName="projects"
             />)}
           </div>
-        </div>
-        <div className="about-container">
+        </section>
+        <section className="about-container">
           <h2>{t('aboutHeader')}</h2>
           <Image
             width={640}
@@ -84,7 +84,7 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
             <p>{t('aboutDescription.p2')}</p>
             <p>TypeScript &#9825;</p>
           </div>
-        </div>
+        </section>
       </div>
     </HomeWrapper>
   );
