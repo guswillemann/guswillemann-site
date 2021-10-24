@@ -52,7 +52,8 @@ const GlobalStyle = createGlobalStyle<{ colors: DefaultTheme['colors'] }>`
   }
   
   body, button, input, textarea  {
-    font: 400 1.6rem sans-serif;
+    font: 400 1.6rem 'IBM Plex Sans', sans-serif;
+    line-height: 1.15;
   }
 
   img, svg {

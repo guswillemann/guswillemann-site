@@ -2,7 +2,9 @@ import NextApp, { AppContext, AppProps } from 'next/app';
 import { parseCookies } from 'nookies';
 import styled, { css, DefaultTheme } from "styled-components";
 import Box from '../src/components/Box';
+import FontLoader from '../src/components/Meta/FontLoader';
 import Header from '../src/components/Header';
+import SEO from '../src/components/Meta/SEO';
 import { ModalProvider } from '../src/context/Modal';
 import { ThemeCookies, themeCookiesNames, ThemeProvider } from '../src/theme';
 import atMediaBreakpoints from '../src/theme/util/atMediaBreakpoints';
@@ -37,6 +39,8 @@ export default function App({ Component, pageProps, themeCookies }: CustomAppPro
     <AppContainer>
       <ThemeProvider themeCookies={themeCookies}>
         <ModalProvider>
+          <FontLoader />
+          <SEO />
           <Header />
           <Box as="main">
             <Component {...pageProps} />

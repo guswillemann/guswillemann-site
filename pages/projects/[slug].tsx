@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import SEO from '../../src/components/Meta/SEO';
 import PostScreen, { PostScreenProps } from '../../src/screens/PostScreen';
 import cms from '../../src/services/cms';
 
@@ -7,7 +8,12 @@ type ProjectPageProps = {
 };
 
 export default function ProjectPage({ project }: ProjectPageProps) {
-  return <PostScreen post={project} />;
+  return (
+    <>
+      <SEO pageTitle={project.title} />
+      <PostScreen post={project} />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, locale }) => {
