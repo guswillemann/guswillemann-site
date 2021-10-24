@@ -39,25 +39,25 @@ const HomeWrapper = styled.div`
   .about-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-areas: "header" "description" "tools";
+    grid-template-areas: "header" "description" "techs";
     grid-gap: 2rem;
     justify-content: center;
     justify-items: center;
     align-items: center;
 
     ${atMediaBreakpoints({
-        lg: css`
-          grid-template-columns: 1fr 1fr;
-          grid-template-areas: "header header" "photo tools" "photo description";
-        `,
-      })}
+      lg: css`
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "header header" "photo techs" "photo description";
+      `,
+    })}
     
     h2 {
       grid-area: header;
       justify-self: flex-start;
     }
     
-    .about-photo {
+    h2 + div {
       grid-area: photo;
       border-radius: calc(2 * ${({ theme }) => theme.borderRadius});
       display: none;
@@ -71,8 +71,8 @@ const HomeWrapper = styled.div`
     }
   }
 
-  .about-tools {
-    grid-area: tools;
+  .about-techs {
+    grid-area: techs;
 
     display: grid;
     grid-template-columns: repeat(2, 1fr);

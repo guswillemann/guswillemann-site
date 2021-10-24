@@ -24,7 +24,7 @@ const PostScreenWrapper = styled.div`
     display: block;
     margin: 2rem auto;
     border-radius: ${({ theme }) => theme.borderRadius};
-
+    max-width: 100%;
   }
 
   a {

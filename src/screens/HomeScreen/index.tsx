@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import PostCard from '../../components/PostCard';
 import Switch from '../../components/Switch';
 import useCardStyleControl from '../../hook/useCardStyleControl';
@@ -58,12 +59,23 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
         </div>
         <div className="about-container">
           <h2>{t('aboutHeader')}</h2>
-          <img className="about-photo" src="/gustavo_willemann.jpg" alt={t('aboutImgAlt')} />
-          <div className="about-tools">
-            {technologies.map((tool) => (
-              <TechnologylLink href={tool.link} key={`tool-${tool.name}`} target="_blank">
-                <img src={`technologies/${tool.imgFile}`} alt={t('techImgAlt')} />
-                <span>{tool.name}</span>
+          <Image
+            width={640}
+            height={640}
+            className="about-photo"
+            src="/gustavo_willemann.jpg"
+            alt={t('aboutImgAlt')}
+          />
+          <div className="about-techs">
+            {technologies.map((tech) => (
+              <TechnologylLink href={tech.link} key={`tech-${tech.name}`} rel="noreferrer" target="_blank">
+                <Image
+                  width={100}
+                  height={100}
+                  src={`/technologies/${tech.imgFile}`}
+                  alt={t('techImgAlt')}
+                />
+                <span>{tech.name}</span>
               </TechnologylLink>
             ))}
           </div>
