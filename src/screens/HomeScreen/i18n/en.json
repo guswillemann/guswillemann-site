@@ -1,10 +1,9 @@
 {
-  "header": "Home",
   "cardStyle": "Card style",
   "cardStyleSwitch": "card style toggle",
   "articleHeader": "Last article",
   "projectHeader": "Last project",
-  "aboutHeader": "About me",
+  "header": "About me",
   "aboutImgAlt": "picture of Gustavo Willemann",
   "techImgAlt": "technology logo",
   "aboutDescription": {

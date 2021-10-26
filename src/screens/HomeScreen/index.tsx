@@ -40,7 +40,6 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
       </ScreenHeader>
       <div className="screen-content">
         <section className="about-container">
-          <h2>{t('aboutHeader')}</h2>
           <div className="about-photo">
             <Image
               width={640}
