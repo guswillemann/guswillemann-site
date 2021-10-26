@@ -1,7 +1,10 @@
 import styled from 'styled-components';
+import setThemeTransition from '../../theme/util/setThemeTransition';
 
-const BurgerButtonWrapper = styled.section`
+const BurgerButtonWrapper = styled.button`
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 
   svg {
     width: 3.5rem;
@@ -9,96 +12,114 @@ const BurgerButtonWrapper = styled.section`
   }
 
   path {
-    transition: 500ms ease-in-out;
-    transition-property: transform stroke;
-    transform-origin: 0 60%;
+    ${setThemeTransition(['stroke'])}
   }
 
-  path.W1 {
-    transform: translate(-22.2%, 0) rotate(-15deg);
-    animation: 500ms ease-in-out reverse PW2;
+  &.closed path.w1 {
+    animation: PW1-close 500ms ease-in-out forwards;
+  }
+  &.closed path.w2 {
+    animation: PW2-close 500ms ease-in-out forwards;
+  }
+  &.closed path.w3 {
+    animation: PW3-close 500ms ease-in-out forwards;
+  }
+  &.closed path.w4 {
+    animation: PW4-close 500ms ease-in-out forwards;
+  }
+
+  &.open path.w1 {
+    animation: PW1 500ms ease-in-out forwards;
     stroke: ${({ theme }) => theme.colors.primary.color};
   }
-
-  path.W2 {
-    transform: translate(-22.2%, 0) rotate(15deg);
-    animation: 500ms ease-in-out reverse PW1;
+  &.open path.w2 {
+    animation: PW2 500ms ease-in-out forwards;
     stroke: ${({ theme }) => theme.colors.primary.color};
   }
-
-  path.W3 {
-    transform: translate(22.2%, 0) rotate(-15deg);
-    animation: 500ms ease-in-out reverse PW4;
+  &.open path.w3 {
+    animation: PW3 500ms ease-in-out forwards;
     stroke: ${({ theme }) => theme.colors.secondary.color};
   }
-
-  path.W4 {
-    transform: translate(22.2%, 0) rotate(15deg);
-    animation: 500ms ease-in-out reverse PW3;
+  &.open path.w4 {
+    animation: PW4 500ms ease-in-out forwards;
     stroke: ${({ theme }) => theme.colors.secondary.color};
-  }
-
-  &.closed path {
-    stroke: ${({ theme }) => theme.colors.box.contrast};
-  }
-
-  &.closed path.W1 {
-    animation: 500ms ease-in-out forwards PW1;
-  }
-
-  &.closed path.W2 {
-    animation: 500ms ease-in-out forwards PW2;
-  }
-
-  &.closed path.W3 {
-    animation: 500ms ease-in-out forwards PW3;
-  }
-
-  &.closed path.W4 {
-    animation: 500ms ease-in-out forwards PW4;
   }
 
   @keyframes PW1 {
     40% {
-      transform-origin: 0 0;
-      transform: translate(0, 0) rotate(0deg);
+      transform: rotate(-90deg) translate(0, 40%) scaleX(1.5);
     }
     100% {
-      transform-origin: 0 0;
-      transform: translate(0, -40%) rotate(90deg);
+      transform: rotate(-105deg) translate(0, -4%) scaleX(1.5);
     }
   }
-
   @keyframes PW2 {
     40% {
-      transform-origin: 0 0;
-      transform: translate(0, 0) rotate(0deg);
+      transform: rotate(-90deg) translate(0, 0%) scaleX(1.5);
     }
     100% {
-      transform-origin: 0 0;
-      transform: translate(0, 0%) rotate(90deg);
+      transform: rotate(-75deg) translate(0, -13%) scaleX(1.5);
     }
   }
-
   @keyframes PW3 {
     40% {
-      transform-origin: 0 0;
-      transform: translate(0, 0) rotate(0deg);
+      transform: rotate(-90deg) translate(0, 0%) scaleX(1.5);
     }
     100% {
-      transform-origin: 0 0;
-      transform: translate(0, 0%) rotate(90deg);
+      transform: rotate(-105deg) translate(0, 13%) scaleX(1.5);
+    }
+  }
+  @keyframes PW4 {
+    40% {
+      transform: rotate(-90deg) translate(0, -40%) scaleX(1.5);
+    }
+    100% {
+      transform: rotate(-75deg) translate(0, 4%) scaleX(1.5);
     }
   }
 
-  @keyframes PW4 {
+  @keyframes PW1-close {
+    0% {
+      transform: rotate(-105deg) translate(0, -4%) scaleX(1.5);
+    }
     40% {
-      transform-origin: 0 0;
-      transform: translate(0, 0) rotate(0deg);
+      transform: rotate(-90deg) translate(0, 40%) scaleX(1.5);
     }
     100% {
-      transform-origin: 0 0;
-      transform: translate(0, 40%) rotate(90deg);
+      transform: rotate(0deg) translate(0, 0%) scaleX(1);
+    }
+  }
+  @keyframes PW2-close {
+    0% {
+      transform: rotate(-75deg) translate(0, -13%) scaleX(1.5);
+    }
+    40% {
+      transform: rotate(-90deg) translate(0, 0%)  scaleX(1.5);
+    }
+    100% {
+      transform: rotate(0deg) translate(0, 0%) scaleX(1);
+    }
+  }
+  @keyframes PW3-close {
+    0% {
+      transform: rotate(-105deg) translate(0, 13%) scaleX(1.5);
+    }
+    40% {
+      transform: rotate(-90deg) translate(0, 0%)  scaleX(1.5);
+    }
+    100% {
+      transform: rotate(0deg) translate(0, 0%) scaleX(1);
+    }
+  }
+  @keyframes PW4-close {
+    0% {
+      transform: rotate(-75deg) translate(0, 4%) scaleX(1.5);
+    }
+    40% {
+      transform: rotate(-90deg) translate(0, -40%)  scaleX(1.5);
+    }
+    100% {
+      transform: rotate(0deg) translate(0, 0%) scaleX(1);
     }
   }
 `;
