@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import useTranslation from '../../hook/useTranslation';
+import Link from '../Link';
 import * as en from './i18n/en.json';
 import * as pt from './i18n/pt.json';
 import PostCardWrapper from './styles';
@@ -43,7 +44,7 @@ export default function PostCard({ variant, postData, pathName }: PostCardProps)
         <div className="post-summary-container">
           <div className="post-summary" dangerouslySetInnerHTML={{ __html: postData.summary }} />
         </div>
-        <a href={`${pathName}/${postData.slug}`}>{t('projectLink')}</a>
+        <Link href={`${pathName}/${postData.slug}`}>{t('projectLink')}</Link>
       </div>
     </PostCardWrapper>
   );
