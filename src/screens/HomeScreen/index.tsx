@@ -74,7 +74,7 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
             {posts.article && (<PostCard
               variant={currentStyle}
               postData={posts.article}
-              pathName="articles"
+              pathName="/articles"
             />)}
           </div>
           <div>
@@ -82,7 +82,7 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
             {posts.project && (<PostCard
               variant={currentStyle}
               postData={posts.project}
-              pathName="projects"
+              pathName="/projects"
             />)}
           </div>
         </section>
