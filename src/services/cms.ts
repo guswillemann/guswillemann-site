@@ -58,7 +58,7 @@ const cms = {
 
   getPostPage: async (type: 'article' | 'project', slug: string, locale: string) => {
     const page = await gql.query(`{
-      ${type} (locale: ${locale}, filter: {slug: {eq: ${slug}}}) {
+      ${type} (locale: ${locale}, filter: {slug: {eq: "${slug}"}}) {
         title
         thumbnail {
           url
