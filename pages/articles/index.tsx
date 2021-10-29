@@ -28,7 +28,7 @@ export default function ProjectPage({ articles, postCardCookie }: ProjectPagePro
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const postCardCookie = parseCookies(ctx)[POSTS_CARD_COOKIE] || null;
-  const articles = await cms.getPostsList('articles', ctx.locale as string);
+  const articles = await cms.getPostsList('article', ctx.locale as string);
 
   return {
     props: {

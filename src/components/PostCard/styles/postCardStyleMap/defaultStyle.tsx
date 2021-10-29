@@ -46,7 +46,7 @@ export const defaultStyle = css`
       transition-property: margin-bottom;
     }
 
-    a {
+    .post-page-link {
       transition: 300ms ease-in-out;
       transition-delay: 0ms, -150ms;
       transition-property: opacity, filter;
@@ -56,18 +56,6 @@ export const defaultStyle = css`
       right: ${paddingWidth};
   
       opacity: 0;
-        
-      padding: 0.5rem;
-      background-color: ${({ theme }) => theme.colors.secondary.color};
-      border-radius: calc(${({ theme }) => theme.borderRadius} / 2);
-      
-      color: inherit;
-      text-decoration: none;
-      font-weight: 700;
-  
-      &:hover {
-        filter: brightness(75%);
-      }
     }
   }
   
@@ -116,7 +104,6 @@ export const defaultStyle = css`
       opacity: 1;
       transition-delay: 300ms;
       transition-property: opacity;
-      overflow-y: auto;
     }
   }
 `;

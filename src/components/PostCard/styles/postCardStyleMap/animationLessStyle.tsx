@@ -37,22 +37,8 @@ export const animationLessStyle = css`
       ${setThemeTransition(['color', 'background-color', 'border-color'])}
     }
 
-    a {
+    .post-page-link {
       transition: filter 150ms ease-in-out;
-
-      text-align: center;
-
-      padding: 0.5rem;
-      background-color: ${({ theme }) => theme.colors.secondary.color};
-      border-radius: calc(${({ theme }) => theme.borderRadius} / 2);
-      
-      color: inherit;
-      text-decoration: none;
-      font-weight: 700;
-
-      &:hover {
-        filter: brightness(75%);
-      }
     }
 
     .post-summary {
@@ -61,6 +47,8 @@ export const animationLessStyle = css`
       flex-direction: column;
       justify-content: center;
       gap: 1rem;
+
+      overflow-y: auto;
     }
   }
 `;

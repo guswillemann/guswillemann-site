@@ -14,27 +14,23 @@ const PostScreenWrapper = styled.div`
     margin-bottom: 1rem;
   }
 
-  img {
-    width: 90%;
+  .img-container {
+    width: 80%;
     margin: 2rem auto;
     border-radius: ${({ theme }) => theme.borderRadius};
+    overflow: hidden;
   }
 
   iframe {
     display: block;
     margin: 2rem auto;
     border-radius: ${({ theme }) => theme.borderRadius};
-    max-width: 100%;
+    max-width: 80%;
   }
 
   a {
+    word-wrap: break-word;
     color: ${({ theme }) => theme.colors.secondary.color};
-    text-decoration: none;
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.75);
-    }
   }
 `;
 
