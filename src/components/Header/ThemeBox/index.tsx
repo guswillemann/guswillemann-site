@@ -70,7 +70,9 @@ export default function ThemeBox() {
   const handleResetTheme = () => {
     setInputColor(null);
     activeColorsPreset(theme.mode);
-    destroyCookie(null, themeCookiesNames[theme.mode]);
+    destroyCookie(null, themeCookiesNames[theme.mode], {
+      path: '/'
+    });
   };
 
   const handleSaveTheme = () => {
