@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { StructuredText, StructuredTextDocument, StructuredTextGraphQlResponseRecord } from 'react-datocms';
+import Video from '../../components/Video';
 import customizeLinkRule from '../../services/cms/utils/customizeLinkRule';
 import PostScreenWrapper from './styles';
 
@@ -13,11 +14,21 @@ type ImageData = {
 
 interface CMSImageRecord extends StructuredTextGraphQlResponseRecord {
   file: ImageData;
-}
+};
 
-interface CMSVideoRecord extends StructuredTextGraphQlResponseRecord {
+interface CMSVideoUrlRecord extends StructuredTextGraphQlResponseRecord {
   src: { providerUid: string }
-}
+};
+
+interface CMSVideoFileRecord extends StructuredTextGraphQlResponseRecord {
+  file: {
+    width: number;
+    height: number;
+    video: {
+      mp4Url: string;
+    };
+  };
+};
 
 export type PostScreenProps = {
   post: {
@@ -64,19 +75,22 @@ export default function PostScreen({ post }: PostScreenProps) {
                   />
                 </div>
               )
-            case 'VideoRecord':
-              const videoRecord = record as CMSVideoRecord;
+            case 'VideoUrlRecord':
+              const videoUrlRecord = record as CMSVideoUrlRecord;
               return (
                 <iframe
                   width="560"
                   height="315"
-                  src={`https://youtube.com/embed/${videoRecord.src.providerUid}`}
+                  src={`https://youtube.com/embed/${videoUrlRecord.src.providerUid}`}
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
               );
+            case 'VideoFileRecord':
+              const videoFileRecord = record as CMSVideoFileRecord;
+              return <Video src={videoFileRecord.file.video.mp4Url} />;
             default:
               return null;
           }

@@ -39,10 +39,23 @@ const PostDescriptionSubQuery = `
         ${ImageSubQuery}
       }
     }
-    ... on VideoRecord {
+    ... on VideoUrlRecord {
       id
       src {
         providerUid
+      }
+    }
+    ... on VideoFileRecord {
+      id
+      file {
+        alt
+        blurUpThumb
+        width
+        height
+        video {
+          streamingUrl
+          mp4Url
+        }
       }
     }
   }
@@ -111,7 +124,6 @@ const cms = {
         }
       }
     }`);
-
     return page.data?.post || null;
   },
 };
