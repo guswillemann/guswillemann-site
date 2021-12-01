@@ -66,7 +66,7 @@ export const defaultStyle = css`
     opacity: 0;
     transition-delay: 0ms;
     transition-property: opacity;
-    overflow: hidden;
+    overflow: hidden auto;
   }
 
   .post-summary {
