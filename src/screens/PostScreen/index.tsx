@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { StructuredText, StructuredTextDocument, StructuredTextGraphQlResponseRecord } from 'react-datocms';
 import Video from '../../components/Video';
+import customizeCoodeRule from '../../services/cms/utils/customizeCodeRule';
 import customizeLinkRule from '../../services/cms/utils/customizeLinkRule';
 import PostScreenWrapper from './styles';
 
@@ -54,7 +55,7 @@ export default function PostScreen({ post }: PostScreenProps) {
           width={post.thumbnail.width}
           height={post.thumbnail.height}
           placeholder="blur"
-          blurDataURL={post.thumbnail.blurUpThumb}
+          blurDataURL={post.thumbnail.blurUpThumb || '/logo.svg'}
         />
       </div>
       <StructuredText
@@ -71,7 +72,7 @@ export default function PostScreen({ post }: PostScreenProps) {
                     width={imageRecord.file.width}
                     height={imageRecord.file.height}
                     placeholder="blur"
-                    blurDataURL={imageRecord.file.blurUpThumb}
+                    blurDataURL={imageRecord.file.blurUpThumb || '/logo.svg'}
                   />
                 </div>
               )
@@ -95,7 +96,10 @@ export default function PostScreen({ post }: PostScreenProps) {
               return null;
           }
         }}
-        customRules={[customizeLinkRule()]}
+        customRules={[
+          customizeLinkRule(),
+          customizeCoodeRule(),       
+        ]}
       />
     </PostScreenWrapper>
   );

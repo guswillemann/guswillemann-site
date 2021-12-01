@@ -32,6 +32,14 @@ const PostScreenWrapper = styled.div`
     word-wrap: break-word;
     color: ${({ theme }) => theme.colors.secondary.color};
   }
+
+  .code-block {
+    border-radius: ${({ theme }) => theme.borderRadius};
+    padding: 2rem;
+    margin: 2rem 0;
+    max-width: 100%;
+    overflow: auto;
+  }
 `;
 
 export default PostScreenWrapper;

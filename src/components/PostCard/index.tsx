@@ -38,7 +38,7 @@ export default function PostCard({ variant, postData, pathName }: PostCardProps)
         height={720}
         objectFit="contain"
         placeholder="blur"
-        blurDataURL={postData.thumbnail.blurUpThumb}
+        blurDataURL={postData.thumbnail.blurUpThumb || '/logo.svg'}
       />
       <div className="post-info">
         <p className="post-title">{postData.title}</p>
