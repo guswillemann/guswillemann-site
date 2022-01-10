@@ -37,7 +37,7 @@ const PostScreenWrapper = styled.div`
     border-radius: ${({ theme }) => theme.borderRadius};
     padding: 2rem;
     margin: 2rem 0;
-    max-width: 100%;
+    width: 100%;
     overflow: auto;
   }
 `;

@@ -12,7 +12,6 @@ import atMediaBreakpoints from '../src/theme/util/atMediaBreakpoints';
 const AppContainer = styled.div`
   padding: 1.5rem;
   min-height: 100vh;
-  max-width: 120rem;
   margin: auto;
 
   display: flex;
@@ -21,13 +20,19 @@ const AppContainer = styled.div`
   
   ${atMediaBreakpoints({
     md: css`
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: 23.5rem 48.8rem;
+      justify-content: center;
+    `,
+    lg: css`
+      display: grid;
+      grid-template-columns: 23.5rem 71.2rem;
+    `,
+    xl: css`
+      display: grid;
+      grid-template-columns: 23.5rem 92rem;
     `,
   })}
-
-  main {
-    flex: 1;
-  }
 `;
 
 interface CustomAppProps extends AppProps {
