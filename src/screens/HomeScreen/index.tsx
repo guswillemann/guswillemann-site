@@ -52,8 +52,8 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
             {technologies.map((tech) => (
               <TechnologylLink href={tech.link} key={`tech-${tech.name}`} rel="noreferrer" target="_blank">
                 <Image
-                  width={100}
-                  height={100}
+                  width={45}
+                  height={45}
                   src={`/technologies/${tech.imgFile}`}
                   alt={t('techImgAlt')}
                 />
