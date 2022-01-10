@@ -5,6 +5,8 @@ import Link from '../../Link';
 
 export const NavBoxWrapper = styled(Box)`
   flex: 1;
+  position: sticky;
+  top: 1.5rem;
 
   ul {
     list-style: none;
