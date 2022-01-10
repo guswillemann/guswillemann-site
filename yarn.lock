@@ -1719,10 +1719,10 @@ raw-body@2.4.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-datocms@^1.6.6:
-  version "1.6.9"
-  resolved "https://registry.yarnpkg.com/react-datocms/-/react-datocms-1.6.9.tgz#bde85b5d5ea44e91259ecb2e780b7ce150aa6778"
-  integrity sha512-6INSMtsuXaaLAaPpaCHwUWXl7c8JlmoJqIXz8VgGJTbvPtAL1kjedUZSLMTmyOjHMUkM0YVfWIEOQ4mHs/UdDg==
+react-datocms@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-datocms/-/react-datocms-2.0.1.tgz#15d8697efeba43a7ae3b5532c78b65bb8aff70a3"
+  integrity sha512-eS5FjhZBi8tw36TQKzblBadrNS+U/8azTu6ppvpidBgrPX5xo637Mkkj6/EVcGnZCUcgnZmv8EAUNP/nKEN7Tg==
   dependencies:
     datocms-listen "^0.1.6"
     datocms-structured-text-generic-html-renderer "^1.1.0"
