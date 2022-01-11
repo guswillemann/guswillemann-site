@@ -1,19 +1,5 @@
-const gql = {
-  query: async (queryString: string) => {
-    return await fetch('https://graphql.datocms.com/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${process.env.CMS_TOKEN}`,
-      },
-      body: JSON.stringify({
-        query: queryString,
-      }),
-    }).then((res) => res.json())
-      .catch((err) => console.log(err));
-  },
-};
+import { gql } from 'graphql-request';
+import cmsClient from './cmsClient';
 
 type PostType = 'article' | 'project';
 
@@ -75,7 +61,7 @@ const PostCardSubQuery = `
 
 const cms = {
   getPostsList: async (type: PostType, locale: string) => {
-    const posts = await gql.query(`{
+    const postsQuery = gql`{
       allPosts (
         locale: ${locale},
         filter: { postType: { eq: "${type}" } },
@@ -83,9 +69,11 @@ const cms = {
       ) {
         ${PostCardSubQuery}
       }
-    }`);
+    }`;
 
-    return posts.data?.allPosts || null;
+    const posts = await cmsClient.request(postsQuery);
+
+    return posts.allPosts || null;
   },
 
   getLastPosts: async (locale: string) => {
@@ -98,19 +86,21 @@ const cms = {
       ${PostCardSubQuery}
     }`;
 
-    const posts = await gql.query(`{
+    const lastPostsQuery = gql`{
       ${getLast('article')}
       ${getLast('project')}
-    }`);
+    }`;
+
+    const posts = await cmsClient.request(lastPostsQuery);
 
     return {
-      article: posts.data?.article[0] || null,
-      project: posts.data?.project[0] || null,
+      article: posts.article[0] || null,
+      project: posts.project[0] || null,
     };
   },
 
   getPostPage: async (slug: string, locale: string) => {
-    const page = await gql.query(`{
+    const postPageQuery = gql`{
       post (locale: ${locale}, filter: {slug: {eq: "${slug}"}}) {
         title
         summary {
@@ -123,8 +113,11 @@ const cms = {
           ${PostDescriptionSubQuery}
         }
       }
-    }`);
-    return page.data?.post || null;
+    }`;
+    
+    const postPage = await cmsClient.request(postPageQuery);
+
+    return postPage.post || null;
   },
 };
 
