@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import SEO from '../../src/components/Meta/SEO';
 import useTranslation from '../../src/hook/useTranslation';
-import ProjectsScreen, { PostsListScreenProps, POSTS_CARD_COOKIE } from '../../src/screens/PostsScreen';
+import PostsScreen, { PostsListScreenProps, POSTS_CARD_COOKIE } from '../../src/screens/PostsScreen';
 import cms from '../../src/services/cms';
 
 type ProjectPageProps = {
@@ -21,7 +21,7 @@ export default function ProjectPage({ articles, postCardCookie }: ProjectPagePro
   return (
     <>
       <SEO pageTitle={pageTitle} />
-      <ProjectsScreen posts={articles} postCardCookie={postCardCookie} title={pageTitle} />
+      <PostsScreen posts={articles} postCardCookie={postCardCookie} title={pageTitle} />
     </>
   );
 }

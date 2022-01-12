@@ -1,4 +1,6 @@
 {
   "thumbnailAlt": "project image",
-  "projectLink": "More details"
+  "articleLink": "More details",
+  "deployLink": "Deploy",
+  "repoLink": "Repository"
 }

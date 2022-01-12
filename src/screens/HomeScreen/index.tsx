@@ -82,6 +82,7 @@ export default function HomeScreen({ posts, postCardCookie }: HomeScreenProps) {
               variant={currentStyle}
               postData={posts.project}
               pathName="/projects"
+              type="project"
             />)}
           </div>
         </section>

@@ -15,9 +15,10 @@ export type PostsListScreenProps = {
   posts: PostCardData[];
   postCardCookie: string;
   title: string;
+  postType?: 'article' | 'project';
 }
 
-export default function PostsScreen({ posts, postCardCookie, title }: PostsListScreenProps) {
+export default function PostsScreen({ posts, postCardCookie, title, postType }: PostsListScreenProps) {
   const router = useRouter();
   const { currentStyle, toggleCardStyle, isDefaultStyle } = useCardStyleControl(postCardCookie);
   const { t } = useTranslation({ en, pt });
@@ -45,6 +46,7 @@ export default function PostsScreen({ posts, postCardCookie, title }: PostsListS
             variant={currentStyle}
             postData={post}
             pathName={router.pathname}
+            type={postType}
           />
         ))}
       </PostsList>

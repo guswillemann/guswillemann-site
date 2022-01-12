@@ -17,7 +17,7 @@ export default function ProjectPage({ article }: ProjectPageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query, locale }) => {
-  const article = await cms.getPostPage(query.slug as string, locale as string);
+  const article = await cms.getArticlePage(query.slug as string, locale as string);
 
   if (!article) return { notFound: true };
 

@@ -37,7 +37,16 @@ export const animationLessStyle = css`
       ${setThemeTransition(['color', 'background-color', 'border-color'])}
     }
 
-    .post-page-link {
+    .post-links-container {
+      display: flex;
+      gap: 1rem;
+
+      a {
+        flex: 1;
+      }
+    }
+    
+    .post-link {
       transition: filter 150ms ease-in-out;
     }
 

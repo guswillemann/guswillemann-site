@@ -1,4 +1,6 @@
 {
   "thumbnailAlt": "Imagem do projeto",
-  "projectLink": "Mais detalhes"
+  "articleLink": "Mais detalhes",
+  "deployLink": "Deploy",
+  "repoLink": "Repositório"
 }

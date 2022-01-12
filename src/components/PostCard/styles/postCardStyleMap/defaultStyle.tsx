@@ -46,7 +46,10 @@ export const defaultStyle = css`
       transition-property: margin-bottom;
     }
 
-    .post-page-link {
+    .post-links-container {
+      display: flex;
+      gap: 1rem;
+      
       transition: 300ms ease-in-out;
       transition-delay: 0ms, -150ms;
       transition-property: opacity, filter;
@@ -92,7 +95,7 @@ export const defaultStyle = css`
         margin-bottom: 1rem;
       }
 
-      a {
+      .post-links-container {
         opacity: 1;
       }
     }

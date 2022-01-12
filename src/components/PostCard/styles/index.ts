@@ -4,7 +4,7 @@ import { postCardStyleMap, PostCardVariants } from './postCardStyleMap';
 const PostCardWrapper = styled.div<{ variant: PostCardVariants }>`
   ${({ variant }) => postCardStyleMap[variant]};
 
-  .post-page-link {
+  .post-link {
     padding: 0.5rem;
     background-color: ${({ theme }) => theme.colors.secondary.color};
     border-radius: calc(${({ theme }) => theme.borderRadius} / 2);

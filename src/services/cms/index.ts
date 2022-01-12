@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request';
+import { PostType } from '../../types';
 import cmsClient from './cmsClient';
-
-type PostType = 'article' | 'project';
 
 const ImageSubQuery = `
   url
@@ -47,77 +46,115 @@ const PostDescriptionSubQuery = `
   }
 `;
 
-const PostCardSubQuery = `
-  id
-  title
-  slug
-  summary {
-    ${PostSummarySubQuery}
-  }
-  thumbnail {
-    ${ImageSubQuery}
-  }
-`;
+const querys = {
+  articles: gql`query ArticlesQuery($locale: SiteLocale = en) {
+    allArticles(locale: $locale) {
+      slug
+      id
+      title
+      thumbnail {
+        ${ImageSubQuery}
+      }
+      summary {
+        ${PostSummarySubQuery}
+      }
+    }
+  }`,
+  
+  projects: gql`query ProjectsQuery($locale: SiteLocale = en) {
+    allProjects(locale: $locale) {
+      id
+      title
+      repoUrl
+      deployUrl
+      thumbnail {
+        ${ImageSubQuery}
+      }
+      summary {
+        ${PostSummarySubQuery}
+      }
+    }
+  }`,
+  
+  lastPosts: gql`query LastPosts($locale: SiteLocale = en) {
+    allArticles(
+      orderBy: _createdAt_DESC,
+      first: "1",
+      locale: $locale,
+    ) {
+      slug
+      id
+      title
+      thumbnail {
+        ${ImageSubQuery}
+      }
+      summary {
+        ${PostSummarySubQuery}
+      }
+    }
+    allProjects(
+      orderBy: _createdAt_DESC,
+      first: "1",
+      locale: $locale,
+    ) {
+      id
+      title
+      repoUrl
+      deployUrl
+      thumbnail {
+        ${ImageSubQuery}
+      }
+      summary {
+        ${PostSummarySubQuery}
+      }
+    }
+  }`,
+
+  articlePage: gql`query ArticlePageQuery($locale: SiteLocale = en, $slugeq: String = "") {
+    article(locale: $locale, filter: {slug: {eq: $slugeq}}) {
+      title
+      summary {
+        ${PostSummarySubQuery}
+      }
+      thumbnail {
+        ${ImageSubQuery}
+      }
+      description {
+        ${PostDescriptionSubQuery}
+      }
+    }
+  }`,
+};
+
 
 const cms = {
   getPostsList: async (type: PostType, locale: string) => {
-    const postsQuery = gql`{
-      allPosts (
-        locale: ${locale},
-        filter: { postType: { eq: "${type}" } },
-        orderBy: _firstPublishedAt_DESC
-      ) {
-        ${PostCardSubQuery}
-      }
-    }`;
+    const typeMap = {
+      article: {
+        responseField: 'allArticles',
+        query: querys.articles
+      },
+      project: {
+        responseField: 'allProjects',
+        query: querys.projects
+      },
+    };
 
-    const posts = await cmsClient.request(postsQuery);
-
-    return posts.allPosts || null;
+    const data = await cmsClient.request(typeMap[type].query, { locale });
+    return data[typeMap[type].responseField] || null;
   },
 
   getLastPosts: async (locale: string) => {
-    const getLast = (type: PostType) => `${type}: allPosts (
-      orderBy: _createdAt_DESC,
-      first: "1",
-      locale: ${locale},
-      filter: { postType: { eq: "${type}" } }
-    ) {
-      ${PostCardSubQuery}
-    }`;
-
-    const lastPostsQuery = gql`{
-      ${getLast('article')}
-      ${getLast('project')}
-    }`;
-
-    const posts = await cmsClient.request(lastPostsQuery);
-
+    const data = await cmsClient.request(querys.lastPosts, { locale });
     return {
-      article: posts.article[0] || null,
-      project: posts.project[0] || null,
+      article: data.allArticles[0] || null,
+      project: data.allProjects[0] || null,
     };
   },
 
-  getPostPage: async (slug: string, locale: string) => {
-    const postPageQuery = gql`{
-      post (locale: ${locale}, filter: {slug: {eq: "${slug}"}}) {
-        title
-        summary {
-          ${PostSummarySubQuery}
-        }
-        thumbnail {
-          ${ImageSubQuery}
-        }
-        description {
-          ${PostDescriptionSubQuery}
-        }
-      }
-    }`;
-    
-    const postPage = await cmsClient.request(postPageQuery);
-
-    return postPage.post || null;
+  getArticlePage: async (slug: string, locale: string) => {
+    const data = await cmsClient.request(querys.articlePage, { locale, slugeq: slug });
+    return data.article || null;
   },
 };
 

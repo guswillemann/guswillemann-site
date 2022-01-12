@@ -14,7 +14,9 @@ export type PostCardVariants = PostCardVariantsType;
 export type PostCardData = {
   id: string;
   title: string;
-  slug: string;
+  slug?: string;
+  repoUrl?: string;
+  deployUrl?: string;
   summary: StructuredTextDocument;
   thumbnail: any;
 };
@@ -23,9 +25,10 @@ type PostCardProps = {
   postData: PostCardData;
   variant: PostCardVariants;
   pathName: string;
+  type?: 'article' | 'project';
 };
 
-export default function PostCard({ variant, postData, pathName }: PostCardProps) {
+export default function PostCard({ variant, postData, pathName, type = 'article' }: PostCardProps) {
   const { t } = useTranslation({ en, pt });
 
   return (
@@ -50,7 +53,19 @@ export default function PostCard({ variant, postData, pathName }: PostCardProps)
             />
           </div>
         </div>
-        <Link className="post-page-link" href={`${pathName}/${postData.slug}`}>{t('projectLink')}</Link>
+        
+        <div className="post-links-container">
+        {type === 'article'
+          ? <Link className="post-link" href={`${pathName}/${postData.slug}`}>{t('articleLink')}</Link>
+          : (
+            <>
+              <Link className="post-link" href={postData.deployUrl}>{t('deployLink')}</Link>
+              <Link className="post-link" href={postData.repoUrl}>{t('repoLink')}</Link>
+            </>
+            )
+          }
+        </div>
+
       </div>
     </PostCardWrapper>
   );
